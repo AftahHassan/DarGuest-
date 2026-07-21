@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('reservation_id')->unique()->constrained()->cascadeOnDelete();
+            $table->enum('status', ['open', 'closed', 'archived'])->default('open')->index();
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('closed_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('recommandations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('property_id')->constrained()->cascadeOnDelete();
+            $table->enum('category', [
+                'restaurant', 'cafe', 'beach', 'surf_school',
+                'taxi', 'pharmacy', 'hospital', 'supermarket', 'atm',
+            ])->index();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('website')->nullable();
             $table->timestamps();
         });
     }

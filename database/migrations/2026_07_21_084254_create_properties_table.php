@@ -13,6 +13,20 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('city')->index();
+            $table->string('address');
+            $table->decimal('price_per_night',8,2);
+            $table->unsignedInteger('bedrooms');
+            $table->unsignedInteger('bathrooms');
+            $table->enum('status', ['available', 'unavailable', 'maintenance'])
+                  ->default('available')
+                  ->index();
+            $table->decimal('latitude',10, 7)->nullable();
+            $table->decimal('longitude',10, 7)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

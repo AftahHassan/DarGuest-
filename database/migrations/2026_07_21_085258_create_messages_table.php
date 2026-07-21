@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('conversation_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('sender_id')->constrained('users')->cascadeOnDelete();
+            $table->enum('sender_type', ['guest', 'owner'])->index();
+            $table->text('message');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
