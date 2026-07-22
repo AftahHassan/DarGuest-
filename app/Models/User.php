@@ -14,14 +14,17 @@ use Illuminate\Notifications\Notifiable;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    
+    use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    protected $fillable=[
+         'first_name', 'last_name', 'email', 'password',
+        'phone', 'role', 'avatar',
+    ];
+
+    protected $hidden =[
+         'password', 'remember_token',
+    ];
     protected function casts(): array
     {
         return [
@@ -29,4 +32,46 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function properties()
+    {
+        return $this ->hasMany(Property::class,'owner_id');
+    }
+
+    public function reservations()
+    {
+        return $this ->hasMany(Reservation::class,'guest_id');
+    }
+
+    public function sentMessages()
+    {
+        return $this ->hasMany(Message::class,'sender_id');
+    }
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+    public function scopeOwners($query)
+    {
+        return $query->where('role', 'owner');
+    }
+
+    public function scopeGuests($query)
+    {
+        return $query->where('role', 'guest');
+    }
+    public function isOwner(): bool
+    {
+        return $this->role === 'owner';
+    }
+
+    public function isGuest(): bool
+    {
+        return $this->role === 'guest';
+    }
+
+    public function fullName(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
 }
