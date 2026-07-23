@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('city')->index();
             $table->string('address');
             $table->decimal('price_per_night',8,2);
+             $table->unsignedInteger('capacity');
             $table->unsignedInteger('bedrooms');
             $table->unsignedInteger('bathrooms');
             $table->enum('status', ['available', 'unavailable', 'maintenance'])
