@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::apiResource('properties',PropertyController::class);
+    Route::apiResource('properties', PropertyController::class)->names('api.properties');
     Route::post('properties/{property}/images', [PropertyImageController::class, 'store']);
     Route::delete('property-images/{propertyImage}', [PropertyImageController::class, 'destroy']);
     Route::get('properties/{property}/info', [PropertyInfoController::class, 'show']);
