@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\PropertyController;
 
@@ -10,11 +11,13 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
 
-Route::get('/dashboard', function () {
-        return auth()->user()->isOwner()
-            ? view('dashboard.owner')
-            : view('dashboard.guest');
-    })->name('dashboard');
+// Route::get('/dashboard', function () {
+//         return auth()->user()->isOwner()
+//             ? view('dashboard.owner')
+//             : view('dashboard.guest');
+//     })->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -26,7 +29,7 @@ Route::get('/dashboard', function () {
     Route::put('properties/{property}/info', [PropertyController::class, 'updateInfo'])->name('properties.info.update');
     Route::post('properties/{property}/recommendations', [PropertyController::class, 'storeRecommendation'])->name('properties.recommendations.store');
     Route::delete('recommendations/{recommendation}', [PropertyController::class, 'destroyRecommendation'])->name('properties.recommendations.destroy');
-
+    
 
 });
 
