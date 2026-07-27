@@ -31,6 +31,46 @@
                     @endcan
                 </div>
             </div>
+            @if (auth()->user()->isGuest())
+                <div class="bg-white p-6 rounded shadow">
+                    <h3 class="font-semibold mb-3">Réserver ce logement</h3>
+
+                    @if ($errors->any())
+                        <div class="bg-red-100 text-red-800 p-3 rounded mb-4 text-sm">
+                            <ul class="list-disc pl-5">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('reservations.store') }}" class="grid grid-cols-2 gap-4">
+                        @csrf
+                        <input type="hidden" name="property_id" value="{{ $property->id }}">
+
+                        <div>
+                            <x-input-label value="Arrivée" />
+                            <input type="date" name="check_in_date" value="{{ old('check_in_date') }}" class="block mt-1 w-full border-gray-300 rounded-md" required>
+                        </div>
+                        <div>
+                             <x-input-label value="Départ" />
+                            <input type="date" name="check_out_date" value="{{ old('check_out_date') }}" class="block mt-1 w-full border-gray-300 rounded-md" required>
+                        </div>
+                        <div>
+                            <x-input-label value="Voyageurs" />
+                            <x-text-input name="number_of_guests" type="number" min="1" class="block mt-1 w-full" :value="old('number_of_guests')" required />
+                        </div>
+                        <div class="col-span-2">
+                            <x-input-label value="Demande spéciale (optionnel)" />
+                            <textarea name="special_request" rows="2" class="block mt-1 w-full border-gray-300 rounded-md">{{ old('special_request') }}</textarea>
+                        </div>
+                        <div class="col-span-2">
+                            <x-primary-button>Réserver</x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            @endif
 
             {{-- Images --}}
             <div class="bg-white p-6 rounded shadow">
