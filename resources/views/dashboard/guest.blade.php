@@ -43,6 +43,25 @@
                 </div>
             </div>
 
+
+            {{-- Prochains séjours --}}
+            <div class="card">
+                <h3 class="font-semibold text-gray-900 mb-4">Prochains séjours</h3>
+                <div class="divide-y divide-gray-100">
+                    @forelse ($upcomingReservations as $reservation)
+                        <a href="{{ route('reservations.show', $reservation) }}" class="flex justify-between py-3 hover:bg-gray-50 -mx-2 px-2 rounded transition">
+                            <div>
+                                <p class="font-medium">{{ $reservation->property->title }}</p>
+                                <p class="text-xs text-gray-500">{{ $reservation->check_in_date->format('d/m/Y') }} → {{ $reservation->check_out_date->format('d/m/Y') }}</p>
+                            </div>
+                            <span class="text-xs px-2 py-1 rounded-full bg-gray-100">{{ $reservation->status }}</span>
+                        </a>
+                    @empty
+                        <p class="text-sm text-gray-500 py-3">Aucun séjour à venir.</p>
+                    @endforelse
+                </div>
+            </div>
+
         </div>
     </div>
 </x-app-layout>
