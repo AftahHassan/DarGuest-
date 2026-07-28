@@ -4,7 +4,6 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Notifications</h2>
             <form method="POST" action="{{ route('notifications.read-all') }}">
                 @csrf
-                @method('PATCH')
                 <button class="text-sm text-indigo-600">Tout marquer comme lu</button>
             </form>
         </div>
@@ -26,7 +25,6 @@
                         @unless ($notification->is_read)
                             <form method="POST" action="{{ route('notifications.read', $notification) }}">
                                 @csrf
-                                @method('PATCH')
                                 <button class="text-xs text-indigo-600">Marquer comme lu</button>
                             </form>
                         @endunless
