@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Conversation;
+use App\Models\Notification;
 use App\Models\Property;
 use App\Models\Reservation;
-use App\Models\Notification;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -14,27 +15,42 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->isOwner()) {
-            return $this->ownerDashboard($user);
-        }
-
-        return $this->guestDashboard($user);
+        return $user->isOwner()
+            ? $this->ownerDashboard($user)
+            : $this->guestDashboard($user);
     }
 
     protected function ownerDashboard($user): View
     {
-        $propertiesQuery = Property::where('owner_id', $user->id);
+        $propertyIds = Property::where('owner_id', $user->id)->pluck('id');
 
         $stats = [
-            'total_properties' => (clone $propertiesQuery)->count(),
-            'available_properties' => (clone $propertiesQuery)->where('status', 'available')->count(),
-            'total_reservations' => Reservation::whereHas('property', fn ($q) => $q->where('owner_id', $user->id))->count(),
-            'unread_notifications' => Notification::where('user_id', $user->id)->where('is_read', false)->count(),
+            'total_properties' => $propertyIds->count(),
+            'available_properties' => Property::whereIn('id', $propertyIds)->where('status', 'available')->count(),
+            'total_reservations' => Reservation::whereIn('property_id', $propertyIds)->count(),
+            'pending_reservations' => Reservation::whereIn('property_id', $propertyIds)->where('status', 'pending')->count(),
+            'unread_notifications' => $user->notifications()->where('is_read', false)->count(),
+            'urgent_messages' => \App\Models\AiAnalysis::where('urgency', true)
+                ->whereHas('message.conversation.reservation.property', fn ($q) => $q->where('owner_id', $user->id))
+                ->count(),
         ];
 
-        $recentProperties = (clone $propertiesQuery)->latest()->take(5)->get();
+        $recentProperties = Property::where('owner_id', $user->id)->latest()->take(5)->get();
 
-        return view('dashboard.owner', compact('stats', 'recentProperties'));
+        $recentConversations = Conversation::whereHas('reservation.property', fn ($q) => $q->where('owner_id', $user->id))
+            ->with('reservation.property', 'reservation.guest')
+            ->latest()
+            ->take(5)
+            ->get();
+
+        $urgentAnalyses = \App\Models\AiAnalysis::where('urgency', true)
+            ->whereHas('message.conversation.reservation.property', fn ($q) => $q->where('owner_id', $user->id))
+            ->with('message.conversation.reservation.property')
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('dashboard.owner', compact('stats', 'recentProperties', 'recentConversations', 'urgentAnalyses'));
     }
 
     protected function guestDashboard($user): View
@@ -43,12 +59,20 @@ class DashboardController extends Controller
             'total_reservations' => Reservation::where('guest_id', $user->id)->count(),
             'upcoming_reservations' => Reservation::where('guest_id', $user->id)
                 ->where('check_in_date', '>=', now())
+                ->whereIn('status', ['pending', 'confirmed'])
                 ->count(),
-            'unread_notifications' => Notification::where('user_id', $user->id)->where('is_read', false)->count(),
+            'unread_notifications' => $user->notifications()->where('is_read', false)->count(),
         ];
 
         $availableProperties = Property::available()->latest()->take(6)->get();
 
-        return view('dashboard.guest', compact('stats', 'availableProperties'));
+        $upcomingReservations = Reservation::where('guest_id', $user->id)
+            ->where('check_in_date', '>=', now())
+            ->with('property')
+            ->orderBy('check_in_date')
+            ->take(3)
+            ->get();
+
+        return view('dashboard.guest', compact('stats', 'availableProperties', 'upcomingReservations'));
     }
 }
