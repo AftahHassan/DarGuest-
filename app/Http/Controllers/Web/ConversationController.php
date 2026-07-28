@@ -16,7 +16,7 @@ class ConversationController extends Controller
     {
         $conversations = \App\Models\Conversation::whereHas('reservation', function ($q) {
             $q->where('guest_id', auth()->id())
-              ->orWhereHas('property', fn($q) => $q->where('user_id', auth()->id()));
+              ->orWhereHas('property', fn($q) => $q->where('owner_id', auth()->id()));
         })->with(['reservation.property', 'reservation.guest', 'messages' => fn($q) => $q->latest()->limit(1)])
           ->latest()->get();
 
