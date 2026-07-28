@@ -45,8 +45,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
     Route::post('conversations/{conversation}/messages', [ConversationController::class, 'storeMessage'])->name('conversations.messages.store');
 
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
-    Route::patch('notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
-    Route::patch('notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+    Route::match(['get', 'post'], 'notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::match(['get', 'post'], 'notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
         
 
 });
