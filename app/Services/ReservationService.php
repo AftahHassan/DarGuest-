@@ -10,6 +10,8 @@ use Carbon\Carbon;
 
 class ReservationService
 {
+    public function __construct(protected NotificationService $notifications) {}
+
     public function create(User $guest, array $data): Reservation
     {
         $property = Property::findOrFail($data['property_id']);
@@ -27,12 +29,13 @@ class ReservationService
             'status' => 'pending',
         ]);
 
-        // Une conversation démarre automatiquement avec chaque réservation
         Conversation::create([
             'reservation_id' => $reservation->id,
             'status' => 'open',
             'started_at' => now(),
         ]);
+
+        $this->notifications->newReservation($reservation);
 
         return $reservation->fresh('conversation');
     }
@@ -44,9 +47,11 @@ class ReservationService
         return $reservation->fresh();
     }
 
-    public function cancel(Reservation $reservation): Reservation
+    public function cancel(Reservation $reservation, User $cancelledBy): Reservation
     {
         $reservation->update(['status' => 'cancelled']);
+
+        $this->notifications->reservationCancelled($reservation, $cancelledBy->role);
 
         return $reservation->fresh();
     }

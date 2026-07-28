@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\PropertyController;
 use App\Http\Controllers\Web\ConversationController;
 use App\Http\Controllers\Web\ReservationController;
+use App\Http\Controllers\Web\NotificationController;
 
 
 Route::get('/', function () {
@@ -42,7 +43,11 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
     Route::get('conversations', [ConversationController::class, 'index'])->name('conversations.index');
     Route::get('conversations/{conversation}', [ConversationController::class, 'show'])->name('conversations.show');
     Route::post('conversations/{conversation}/messages', [ConversationController::class, 'storeMessage'])->name('conversations.messages.store');
-    
+
+    Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::patch('notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::patch('notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+        
 
 });
 
