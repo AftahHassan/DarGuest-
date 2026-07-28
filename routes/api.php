@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ConversationController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\NotificationController;
 
 
 Route::post('/register',[AuthController::class, 'register']);
@@ -43,5 +44,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('conversations/{conversation}', [ConversationController::class, 'show'])->name('api.conversations.show');
     Route::get('conversations/{conversation}/messages', [MessageController::class, 'index'])->name('api.conversations.messages.index');
     Route::post('conversations/{conversation}/messages', [MessageController::class, 'store'])->name('api.conversations.messages.store');
+
+
+
+    Route::get('notifications', [NotificationController::class, 'index'])->name('api.notifications.index');
+    Route::patch('notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('api.notifications.read');
+    Route::patch('notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('api.notifications.read-all');
 
 });
