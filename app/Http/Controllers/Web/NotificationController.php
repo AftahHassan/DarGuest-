@@ -22,7 +22,9 @@ class NotificationController extends Controller
 
         $notification->update(['is_read' => true]);
 
-        return back();
+        return request()->method() === 'GET'
+            ? redirect()->route('notifications.index')
+            : back();
     }
 
     public function markAllAsRead(): RedirectResponse

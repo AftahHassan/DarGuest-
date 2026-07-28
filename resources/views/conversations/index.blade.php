@@ -26,7 +26,7 @@
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <div class="flex items-center justify-between">
-                                            <p class="text-sm font-semibold text-surface-900 truncate">{{ $conv->reservation->guest->fullName() ?? 'N/A' }}</p>
+                                            <p class="text-sm font-semibold text-surface-900 truncate">{{ $conv->reservation->guest?->fullName() ?? 'N/A' }}</p>
                                             @if($conv->messages->count() > 0)
                                                 <span class="text-[10px] text-surface-400">{{ $conv->messages->last()->created_at->diffForHumans() }}</span>
                                             @endif
@@ -52,7 +52,7 @@
                                         {{ strtoupper(substr($conv->reservation->guest->first_name ?? 'U', 0, 1)) }}
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-surface-900">{{ $conv->reservation->guest->fullName() ?? 'N/A' }}</p>
+                                        <p class="text-sm font-semibold text-surface-900">{{ $conv->reservation->guest?->fullName() ?? 'N/A' }}</p>
                                         <p class="text-xs text-surface-500">{{ $conv->reservation->property->title ?? '' }}</p>
                                     </div>
                                 </div>
