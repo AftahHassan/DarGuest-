@@ -1,30 +1,30 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ auth()->user()->isOwner() ? 'Mes logements' : 'Logements disponibles' }}
-        </h2>
-    </x-slot>
+    <div class="py-10">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-surface-900">
+                    {{ auth()->user()->isOwner() ? 'Mes logements' : 'Logements disponibles' }}
+                </h1>
+
+                @if (auth()->user()->isOwner())
+                    <a href="{{ route('properties.create') }}" class="btn-primary">
+                        + Ajouter un logement
+                    </a>
+                @endif
+            </div>
 
             @if (session('status'))
-                <div class="bg-green-100 text-green-800 p-3 rounded">{{ session('status') }}</div>
-            @endif
-
-            @if (auth()->user()->isOwner())
-                <a href="{{ route('properties.create') }}" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded">
-                    + Ajouter un logement
-                </a>
+                <div class="alert-success">{{ session('status') }}</div>
             @endif
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 @foreach ($properties as $property)
-                    <a href="{{ route('properties.show', $property) }}" class="block bg-white rounded shadow p-4 hover:shadow-md">
-                        <h3 class="font-semibold">{{ $property->title }}</h3>
-                        <p class="text-sm text-gray-500">{{ $property->city }}</p>
-                        <p class="text-sm">{{ $property->price_per_night }} MAD / nuit</p>
-                        <span class="text-xs uppercase text-gray-400">{{ $property->status }}</span>
+                    <a href="{{ route('properties.show', $property) }}" class="card p-4 hover:shadow-elevated transition-shadow duration-200 block">
+                        <h3 class="font-semibold text-surface-900">{{ $property->title }}</h3>
+                        <p class="text-sm text-surface-500 mt-1">{{ $property->city }}</p>
+                        <p class="text-sm font-semibold text-navy-700 mt-1">{{ $property->price_per_night }} MAD / nuit</p>
+                        <span class="badge badge-gray mt-2">{{ $property->status }}</span>
                     </a>
                 @endforeach
             </div>
