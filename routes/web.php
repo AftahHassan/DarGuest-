@@ -13,6 +13,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::view('/conditions', 'pages.conditions')->name('conditions');
+Route::view('/confidentialite', 'pages.privacy')->name('privacy');
+Route::view('/support', 'pages.support')->name('support');
+
 Route::middleware('auth')->group(function () {
 
 // Route::get('/dashboard', function () {

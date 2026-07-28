@@ -174,11 +174,6 @@
             </p>
         </div>
 
-        <div class="flex justify-center gap-6 mt-8 text-xs text-white/40">
-            <a href="#" class="hover:text-white/70 transition-colors">{{ __('Conditions') }}</a>
-            <a href="#" class="hover:text-white/70 transition-colors">{{ __('Confidentialité') }}</a>
-            <a href="#" class="hover:text-white/70 transition-colors">{{ __('Support') }}</a>
-        </div>
     </div>
 
     <style>

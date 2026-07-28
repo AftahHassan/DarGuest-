@@ -112,7 +112,7 @@
                     </div>
                 </div>
 
-                <a href="#"
+                <a href="{{ route('auth.google') }}"
                    class="flex items-center justify-center gap-2 w-full px-4 py-2 border border-surface-200 rounded-2xl text-sm font-medium text-surface-700 bg-white hover:bg-surface-50 hover:border-surface-300 transition-all duration-200">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
@@ -136,9 +136,9 @@
         </div>
 
         <div class="flex justify-center gap-6 mt-8 text-xs text-white/40">
-            <a href="#" class="hover:text-white/70 transition-colors">{{ __('Conditions') }}</a>
-            <a href="#" class="hover:text-white/70 transition-colors">{{ __('Confidentialité') }}</a>
-            <a href="#" class="hover:text-white/70 transition-colors">{{ __('Support') }}</a>
+            <a href="{{ route('conditions') }}" class="hover:text-white/70 transition-colors">{{ __('Conditions') }}</a>
+            <a href="{{ route('privacy') }}" class="hover:text-white/70 transition-colors">{{ __('Confidentialité') }}</a>
+            <a href="{{ route('support') }}" class="hover:text-white/70 transition-colors">{{ __('Support') }}</a>
         </div>
     </div>
 
