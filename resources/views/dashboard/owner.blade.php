@@ -95,7 +95,7 @@
                         <a href="{{ route('reservations.show', $conversation->reservation) }}" class="flex justify-between py-3 hover:bg-surface-50 -mx-2 px-2 rounded transition">
                             <div>
                                 <p class="font-medium text-surface-900">{{ $conversation->reservation?->property?->title ?? 'Logement supprimé' }}</p>
-                                <p class="text-xs text-surface-500">{{ $conversation->reservation->guest->fullName() }}</p>
+                                <p class="text-xs text-surface-500">{{ $conversation->reservation->guest?->fullName() ?? 'N/A' }}</p>
                             </div>
                             <span class="text-xs text-surface-400">{{ $conversation->created_at->diffForHumans() }}</span>
                         </a>

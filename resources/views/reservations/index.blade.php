@@ -16,7 +16,7 @@
                             <p class="text-sm text-surface-500">
                                 {{ $reservation->check_in_date->format('d/m/Y') }} → {{ $reservation->check_out_date->format('d/m/Y') }}
                                 @if(auth()->user()->isOwner())
-                                    · {{ $reservation->guest->fullName() }}
+                                    · {{ $reservation->guest?->fullName() ?? 'N/A' }}
                                 @endif
                             </p>
                         </div>
