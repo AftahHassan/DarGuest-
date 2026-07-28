@@ -30,18 +30,18 @@
 
     {{-- Glassmorphism Card --}}
     <div class="relative z-10 w-full max-w-[420px]">
-        <div class="glass rounded-3xl p-8 sm:p-10 shadow-elevated">
-            <div class="text-center mb-8">
-                <div class="w-14 h-14 rounded-2xl bg-navy-700 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-navy-700/20">
-                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-elevated border border-surface-100">
+            <div class="text-center mb-5">
+                <div class="w-12 h-12 rounded-2xl bg-navy-700 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-navy-700/20">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" />
                     </svg>
                 </div>
-                <h2 class="text-2xl font-bold text-surface-900">{{ __('Créer un compte') }}</h2>
-                <p class="text-sm text-surface-500 mt-1">{{ __('Rejoignez DarGuest dès aujourd\'hui') }}</p>
+                <h2 class="text-xl font-bold text-surface-900">{{ __('Créer un compte') }}</h2>
+                <p class="text-sm text-surface-500 mt-0.5">{{ __('Rejoignez DarGuest dès aujourd\'hui') }}</p>
             </div>
 
-            <form method="POST" action="{{ route('register') }}" class="space-y-4">
+            <form method="POST" action="{{ route('register') }}" class="space-y-3">
                 @csrf
 
                 <div class="grid grid-cols-2 gap-3">
@@ -155,7 +155,7 @@
                 </div>
 
                 <button type="submit"
-                        class="btn-primary w-full py-3 rounded-2xl text-sm font-semibold shadow-xl shadow-navy-700/20 hover:shadow-navy-700/30 hover:-translate-y-0.5 transition-all duration-300">
+                        class="btn-primary w-full py-2.5 rounded-2xl text-sm font-semibold shadow-xl shadow-navy-700/20 hover:shadow-navy-700/30 hover:-translate-y-0.5 transition-all duration-300">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -163,7 +163,7 @@
                 </button>
             </form>
 
-            <p class="mt-8 text-center text-sm text-surface-500">
+            <p class="mt-5 text-center text-sm text-surface-500">
                 {{ __('Déjà inscrit ?') }}
                 @if (Route::has('login'))
                     <a href="{{ route('login') }}"
@@ -186,7 +186,7 @@
             from { opacity: 0; transform: translateY(20px); }
             to   { opacity: 1; transform: translateY(0); }
         }
-        .glass {
+        .bg-white {
             animation: fadeSlideIn 0.6s ease-out both;
         }
     </style>

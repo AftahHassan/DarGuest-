@@ -30,20 +30,20 @@
 
     {{-- Glassmorphism Card --}}
     <div class="relative z-10 w-full max-w-[420px]">
-        <div class="glass rounded-3xl p-8 sm:p-10 shadow-elevated">
-            <div class="text-center mb-8">
-                <div class="w-14 h-14 rounded-2xl bg-navy-700 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-navy-700/20">
-                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-elevated border border-surface-100">
+            <div class="text-center mb-5">
+                <div class="w-12 h-12 rounded-2xl bg-navy-700 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-navy-700/20">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                     </svg>
                 </div>
-                <h2 class="text-2xl font-bold text-surface-900">{{ __('Connexion') }}</h2>
-                <p class="text-sm text-surface-500 mt-1">{{ __('Accédez à votre tableau de bord') }}</p>
+                <h2 class="text-xl font-bold text-surface-900">{{ __('Connexion') }}</h2>
+                <p class="text-sm text-surface-500 mt-0.5">{{ __('Accédez à votre tableau de bord') }}</p>
             </div>
 
-            <x-auth-session-status class="mb-6" :status="session('status')" />
+            <x-auth-session-status class="mb-4" :status="session('status')" />
 
-            <form method="POST" action="{{ route('login') }}" class="space-y-5">
+            <form method="POST" action="{{ route('login') }}" class="space-y-4">
                 @csrf
 
                 <div>
@@ -95,7 +95,7 @@
                 </div>
 
                 <button type="submit"
-                        class="btn-primary w-full py-3 rounded-2xl text-sm font-semibold shadow-xl shadow-navy-700/20 hover:shadow-navy-700/30 hover:-translate-y-0.5 transition-all duration-300">
+                        class="btn-primary w-full py-2.5 rounded-2xl text-sm font-semibold shadow-xl shadow-navy-700/20 hover:shadow-navy-700/30 hover:-translate-y-0.5 transition-all duration-300">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                     </svg>
@@ -103,17 +103,17 @@
                 </button>
 
                 {{-- Social --}}
-                <div class="relative my-6">
+                <div class="relative my-4">
                     <div class="absolute inset-0 flex items-center">
                         <div class="w-full border-t border-surface-200"></div>
                     </div>
                     <div class="relative flex justify-center text-xs uppercase">
-                        <span class="bg-white/70 px-4 text-surface-400 font-medium">{{ __('Ou continuer avec') }}</span>
+                        <span class="bg-white px-4 text-surface-400 font-medium">{{ __('Ou continuer avec') }}</span>
                     </div>
                 </div>
 
                 <a href="#"
-                   class="flex items-center justify-center gap-2.5 w-full px-4 py-2.5 border border-surface-200 rounded-2xl text-sm font-medium text-surface-700 bg-white hover:bg-surface-50 hover:border-surface-300 transition-all duration-200">
+                   class="flex items-center justify-center gap-2 w-full px-4 py-2 border border-surface-200 rounded-2xl text-sm font-medium text-surface-700 bg-white hover:bg-surface-50 hover:border-surface-300 transition-all duration-200">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
                         <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -124,7 +124,7 @@
                 </a>
             </form>
 
-            <p class="mt-8 text-center text-sm text-surface-500">
+            <p class="mt-5 text-center text-sm text-surface-500">
                 {{ __("Vous n'avez pas de compte ?") }}
                 @if (Route::has('register'))
                     <a href="{{ route('register') }}"
@@ -147,7 +147,7 @@
             from { opacity: 0; transform: translateY(20px); }
             to   { opacity: 1; transform: translateY(0); }
         }
-        .glass {
+        .bg-white {
             animation: fadeSlideIn 0.6s ease-out both;
         }
     </style>
