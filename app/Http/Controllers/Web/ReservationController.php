@@ -53,7 +53,7 @@ class ReservationController extends Controller
     {
         $this->authorize('cancel', $reservation);
 
-        $this->reservations->cancel($reservation);
+        $this->reservations->cancel($reservation, auth()->user());
 
         return back()->with('status', 'Réservation annulée.');
     }
