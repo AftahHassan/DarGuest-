@@ -24,3 +24,4 @@ class MessageService
         return $message;
     }
 }
+
