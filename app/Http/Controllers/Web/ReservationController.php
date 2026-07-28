@@ -37,7 +37,7 @@ class ReservationController extends Controller
     {
         $this->authorize('view', $reservation);
 
-        $reservation->load('property', 'guest', 'conversation.messages.sender');
+        $reservation->load('property', 'guest', 'conversation.messages.sender', 'conversation.messages.aiAnalysis');
 
         return view('reservations.show', compact('reservation'));
     }

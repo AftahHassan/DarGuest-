@@ -77,48 +77,39 @@
                         <div class="flex {{ $isOwn ? 'justify-end' : 'justify-start' }}">
                             <div class="max-w-[75%]">
                                 <div class="px-4 py-3 rounded-2xl text-sm leading-relaxed
-                                    {{ $isOwn ? 'bg-navy-700 text-white rounded-br-md' : 'bg-surface-100 text-surface-800 rounded-bl-md' }}">
-                                    <p class="text-[11px] opacity-70 mb-1">{{ $message->sender->fullName() }}</p>
-                                    {{ $message->message }}
-                                </div>
-                                <p class="text-[10px] text-surface-400 mt-1 px-1">{{ $message->created_at->format('d/m/Y H:i') }}</p>
-                            </div>
-                        </div>
-
-                        @if ($message->sender_type === 'guest' && $message->aiAnalysis)
-                            <div class="flex justify-start">
-                                <div class="max-w-[75%]">
-                                    <div class="px-4 py-3 rounded-2xl rounded-bl-md text-sm leading-relaxed bg-emerald-50 border border-emerald-200 text-surface-800">
+                                    @if ($message->sender_type === 'ai')
+                                        bg-emerald-50 border border-emerald-200 text-surface-800 rounded-bl-md
+                                    @else
+                                        {{ $isOwn ? 'bg-navy-700 text-white rounded-br-md' : 'bg-surface-100 text-surface-800 rounded-bl-md' }}
+                                    @endif">
+                                    @if ($message->sender_type === 'ai')
                                         <div class="flex items-center gap-2 mb-1.5">
-                                            <span class="text-[11px] font-semibold text-emerald-700">Réponse IA</span>
-                                            @if ($message->aiAnalysis->urgency)
+                                            <span class="text-[11px] font-semibold text-emerald-700">Assistant IA</span>
+                                            <x-ui.badge variant="primary" class="!text-[9px] !px-1.5 !py-0">Réponse IA</x-ui.badge>
+                                            @if ($message->aiAnalysis?->urgency)
                                                 <span class="inline-flex items-center gap-1 text-[10px] font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded-full">
                                                     <span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
                                                     URGENT
                                                 </span>
                                             @endif
                                         </div>
-                                        <p class="text-surface-800">{{ $message->aiAnalysis->generated_response }}</p>
-                                        <div class="flex items-center gap-2 mt-2">
-                                            <span class="badge-primary !text-[9px]">{{ $message->aiAnalysis->detected_language }}</span>
-                                            <span class="badge-primary !text-[9px]">{{ $message->aiAnalysis->category }}</span>
-                                            @if ($message->aiAnalysis->confidence)
-                                                <span class="text-[9px] text-surface-400">Confiance: {{ round($message->aiAnalysis->confidence * 100) }}%</span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <p class="text-[10px] text-surface-400 mt-1 px-1">{{ $message->aiAnalysis->analyzed_at?->format('d/m/Y H:i') }}</p>
+                                    @else
+                                        <p class="text-[11px] opacity-70 mb-1">{{ $message->sender?->fullName() ?: ($message->sender_type === 'guest' ? 'Voyageur' : 'Propriétaire') }}</p>
+                                    @endif
+                                    {{ $message->message }}
                                 </div>
-                            </div>
-                        @elseif ($message->sender_type === 'guest' && !$message->aiAnalysis)
-                            <div class="flex justify-start">
-                                <div class="max-w-[75%]">
-                                    <div class="px-4 py-2.5 rounded-2xl rounded-bl-md text-sm bg-surface-50 border border-surface-100 text-surface-400 italic">
-                                        Analyse en cours...
+                                @if ($message->sender_type === 'ai' && $message->aiAnalysis)
+                                    <div class="flex items-center gap-2 mt-1 px-1">
+                                        <span class="badge-primary !text-[9px]">{{ $message->aiAnalysis->detected_language }}</span>
+                                        <span class="badge-primary !text-[9px]">{{ $message->aiAnalysis->category }}</span>
+                                        @if ($message->aiAnalysis->confidence)
+                                            <span class="text-[9px] text-surface-400">Confiance: {{ round($message->aiAnalysis->confidence * 100) }}%</span>
+                                        @endif
                                     </div>
-                                </div>
+                                @endif
+                                <p class="text-[10px] text-surface-400 mt-1 px-1">{{ $message->created_at->format('d/m/Y H:i') }}</p>
                             </div>
-                        @endif
+                        </div>
                     @empty
                         <div class="text-center py-12">
                             <div class="w-14 h-14 rounded-2xl bg-surface-100 flex items-center justify-center mx-auto mb-3">

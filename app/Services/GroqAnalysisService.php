@@ -69,6 +69,12 @@ class GroqAnalysisService
                 'analyzed_at' => now(),
             ]);
 
+            $message->conversation->messages()->create([
+                'sender_type' => 'ai',
+                'sender_id' => null,
+                'message' => $data['response'],
+            ]);
+
             if ($data['urgent']) {
                 $this->notifyOwner($message);
             }
@@ -83,6 +89,12 @@ class GroqAnalysisService
                 'urgency' => false,
                 'generated_response' => "Nous ne pouvons pas générer de réponse automatique pour le moment. Le propriétaire vous contactera sous peu.",
                 'analyzed_at' => now(),
+            ]);
+
+            $message->conversation->messages()->create([
+                'sender_type' => 'ai',
+                'sender_id' => null,
+                'message' => "Nous ne pouvons pas générer de réponse automatique pour le moment. Le propriétaire vous contactera sous peu.",
             ]);
         }
     }
