@@ -51,7 +51,7 @@
                     @forelse ($upcomingReservations as $reservation)
                         <a href="{{ route('reservations.show', $reservation) }}" class="flex justify-between py-3 hover:bg-gray-50 -mx-2 px-2 rounded transition">
                             <div>
-                                <p class="font-medium">{{ $reservation->property->title }}</p>
+                                <p class="font-medium">{{ $reservation->property?->title ?? 'Logement supprimé' }}</p>
                                 <p class="text-xs text-gray-500">{{ $reservation->check_in_date->format('d/m/Y') }} → {{ $reservation->check_out_date->format('d/m/Y') }}</p>
                             </div>
                             <span class="text-xs px-2 py-1 rounded-full bg-gray-100">{{ $reservation->status }}</span>

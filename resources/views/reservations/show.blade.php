@@ -9,7 +9,7 @@
         <div class="bg-white border border-surface-200 rounded-xl shadow-card p-6">
             <div class="flex justify-between items-start">
                 <div>
-                    <h2 class="text-xl font-bold text-surface-900">{{ $reservation->property->title }}</h2>
+                    <h2 class="text-xl font-bold text-surface-900">{{ $reservation->property?->title ?? 'Logement supprimé' }}</h2>
                     <div class="mt-4 grid grid-cols-2 gap-4 text-sm">
                         <div>
                             <p class="text-surface-500">Dates</p>

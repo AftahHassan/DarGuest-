@@ -77,7 +77,7 @@
                         @foreach ($urgentAnalyses as $analysis)
                             <a href="{{ route('reservations.show', $analysis->message->conversation->reservation) }}" class="flex justify-between py-3 hover:bg-red-100/50 -mx-2 px-2 rounded transition">
                                 <div>
-                                    <p class="font-medium text-red-800">{{ $analysis->message->conversation->reservation->property->title }}</p>
+                                    <p class="font-medium text-red-800">{{ $analysis->message->conversation->reservation?->property?->title ?? 'Logement supprimé' }}</p>
                                     <p class="text-sm text-red-600">{{ $analysis->message->message }}</p>
                                 </div>
                                 <span class="text-xs text-red-500">{{ $analysis->analyzed_at->diffForHumans() }}</span>
@@ -94,7 +94,7 @@
                     @forelse ($recentConversations as $conversation)
                         <a href="{{ route('reservations.show', $conversation->reservation) }}" class="flex justify-between py-3 hover:bg-surface-50 -mx-2 px-2 rounded transition">
                             <div>
-                                <p class="font-medium text-surface-900">{{ $conversation->reservation->property->title }}</p>
+                                <p class="font-medium text-surface-900">{{ $conversation->reservation?->property?->title ?? 'Logement supprimé' }}</p>
                                 <p class="text-xs text-surface-500">{{ $conversation->reservation->guest->fullName() }}</p>
                             </div>
                             <span class="text-xs text-surface-400">{{ $conversation->created_at->diffForHumans() }}</span>
