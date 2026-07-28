@@ -13,6 +13,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::view('/conditions', 'pages.conditions')->name('conditions');
+Route::view('/confidentialite', 'pages.privacy')->name('privacy');
+Route::view('/support', 'pages.support')->name('support');
+
 Route::middleware('auth')->group(function () {
 
 // Route::get('/dashboard', function () {
@@ -45,8 +49,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
     Route::post('conversations/{conversation}/messages', [ConversationController::class, 'storeMessage'])->name('conversations.messages.store');
 
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
-    Route::patch('notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
-    Route::patch('notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+    Route::match(['get', 'post'], 'notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::match(['get', 'post'], 'notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
         
 
 });

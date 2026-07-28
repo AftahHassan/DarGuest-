@@ -12,11 +12,11 @@
                 @forelse ($reservations as $reservation)
                     <a href="{{ route('reservations.show', $reservation) }}" class="flex items-center justify-between p-4 hover:bg-surface-50 transition-colors duration-150">
                         <div>
-                            <p class="font-medium text-surface-900">{{ $reservation->property->title }}</p>
+                            <p class="font-medium text-surface-900">{{ $reservation->property?->title ?? 'Logement supprimé' }}</p>
                             <p class="text-sm text-surface-500">
                                 {{ $reservation->check_in_date->format('d/m/Y') }} → {{ $reservation->check_out_date->format('d/m/Y') }}
                                 @if(auth()->user()->isOwner())
-                                    · {{ $reservation->guest->fullName() }}
+                                    · {{ $reservation->guest?->fullName() ?? 'N/A' }}
                                 @endif
                             </p>
                         </div>

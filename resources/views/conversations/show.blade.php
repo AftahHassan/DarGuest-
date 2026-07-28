@@ -11,7 +11,7 @@
                     {{ strtoupper(substr($conv->reservation->guest->first_name ?? 'U', 0, 1)) }}
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-surface-900">{{ $conv->reservation->guest->fullName() ?? 'N/A' }}</h2>
+                    <h2 class="text-lg font-bold text-surface-900">{{ $conv->reservation->guest?->fullName() ?? 'N/A' }}</h2>
                     <p class="text-sm text-surface-500">{{ $conv->reservation->property->title ?? '' }}</p>
                 </div>
             </div>
