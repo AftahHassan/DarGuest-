@@ -54,6 +54,7 @@
             <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Réservations</span>
         </a>
 
+        @if(Route::has('conversations.index'))
         <a href="{{ route('conversations.index') }}"
            class="sidebar-link {{ str_starts_with($currentRoute, 'conversations') ? 'sidebar-link-active' : 'sidebar-link-default' }}"
            title="Messages">
@@ -62,9 +63,11 @@
             </svg>
             <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Messages</span>
         </a>
+        @endif
 
         <div class="my-3 border-t border-surface-100"></div>
 
+        @if(Route::has('ai-analysis.index'))
         <a href="{{ route('ai-analysis.index') }}"
            class="sidebar-link {{ str_starts_with($currentRoute, 'ai-analysis') ? 'sidebar-link-active' : 'sidebar-link-default' }}"
            title="Analyse IA">
@@ -73,6 +76,7 @@
             </svg>
             <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Analyse IA</span>
         </a>
+        @endif
 
         @if($user->isOwner())
         <a href="{{ route('properties.index') }}"
@@ -85,6 +89,7 @@
         </a>
         @endif
 
+        @if(Route::has('notifications.index'))
         <a href="{{ route('notifications.index') }}"
            class="sidebar-link {{ str_starts_with($currentRoute, 'notifications') ? 'sidebar-link-active' : 'sidebar-link-default' }}"
            title="Notifications">
@@ -99,6 +104,7 @@
                 </span>
             @endif
         </a>
+        @endif
 
         <div class="my-3 border-t border-surface-100"></div>
 
@@ -111,6 +117,7 @@
             <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Profil</span>
         </a>
 
+        @if(Route::has('settings.index'))
         <a href="{{ route('settings.index') }}"
            class="sidebar-link {{ str_starts_with($currentRoute, 'settings') ? 'sidebar-link-active' : 'sidebar-link-default' }}"
            title="Paramètres">
@@ -120,6 +127,7 @@
             </svg>
             <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Paramètres</span>
         </a>
+        @endif
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
