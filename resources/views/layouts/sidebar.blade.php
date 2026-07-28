@@ -8,25 +8,24 @@
     :class="sidebarOpen ? 'sidebar-expanded' : 'sidebar-collapsed'"
     x-show="true"
 >
-    {{-- Logo --}}
-    <div class="h-16 flex items-center px-5 border-b border-surface-100 flex-shrink-0">
+    <div class="h-20 flex items-center px-5 border-b border-surface-100 flex-shrink-0">
         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 overflow-hidden">
-            <div class="w-9 h-9 bg-navy-700 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-600/20">
                 <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
                 </svg>
             </div>
             <span
-                class="text-lg font-bold text-surface-900 tracking-tight whitespace-nowrap transition-all duration-200"
+                class="text-xl font-bold text-surface-900 tracking-tight whitespace-nowrap transition-all duration-200"
                 :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'"
             >
-                Dar<span class="text-navy-700">Guest</span>
+                Dar<span class="text-blue-600">Guest</span>
             </span>
         </a>
     </div>
 
-    {{-- Navigation --}}
-    <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+    <div class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+        {{-- Dashboard --}}
         <a href="{{ route('dashboard') }}"
            class="sidebar-link {{ $currentRoute === 'dashboard' ? 'sidebar-link-active' : 'sidebar-link-default' }}"
            title="Dashboard">
@@ -36,15 +35,17 @@
             <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Dashboard</span>
         </a>
 
+        {{-- Mes logements --}}
         <a href="{{ route('properties.index') }}"
            class="sidebar-link {{ str_starts_with($currentRoute, 'properties') ? 'sidebar-link-active' : 'sidebar-link-default' }}"
-           title="Propriétés">
+           title="Mes logements">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
             </svg>
-            <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Propriétés</span>
+            <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Mes logements</span>
         </a>
 
+        {{-- Réservations --}}
         <a href="{{ route('reservations.index') }}"
            class="sidebar-link {{ str_starts_with($currentRoute, 'reservations') ? 'sidebar-link-active' : 'sidebar-link-default' }}"
            title="Réservations">
@@ -54,41 +55,29 @@
             <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Réservations</span>
         </a>
 
+        {{-- Voyageurs --}}
+        <a href="{{ route('reservations.index') }}"
+           class="sidebar-link sidebar-link-default"
+           title="Voyageurs">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
+            </svg>
+            <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Voyageurs</span>
+        </a>
+
+        {{-- Messagerie IA --}}
         @if(Route::has('conversations.index'))
         <a href="{{ route('conversations.index') }}"
            class="sidebar-link {{ str_starts_with($currentRoute, 'conversations') ? 'sidebar-link-active' : 'sidebar-link-default' }}"
-           title="Messages">
-            <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
-            </svg>
-            <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Messages</span>
-        </a>
-        @endif
-
-        <div class="my-3 border-t border-surface-100"></div>
-
-        @if(Route::has('ai-analysis.index'))
-        <a href="{{ route('ai-analysis.index') }}"
-           class="sidebar-link {{ str_starts_with($currentRoute, 'ai-analysis') ? 'sidebar-link-active' : 'sidebar-link-default' }}"
-           title="Analyse IA">
+           title="Messagerie IA">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
             </svg>
-            <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Analyse IA</span>
+            <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Messagerie IA</span>
         </a>
         @endif
 
-        @if($user->isOwner())
-        <a href="{{ route('properties.index') }}"
-           class="sidebar-link sidebar-link-default"
-           title="Recommandations">
-            <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/>
-            </svg>
-            <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Recommandations</span>
-        </a>
-        @endif
-
+        {{-- Notifications --}}
         @if(Route::has('notifications.index'))
         <a href="{{ route('notifications.index') }}"
            class="sidebar-link {{ str_starts_with($currentRoute, 'notifications') ? 'sidebar-link-active' : 'sidebar-link-default' }}"
@@ -99,24 +88,36 @@
             <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Notifications</span>
             @php $unreadCount = $user->unreadNotifications()->count(); @endphp
             @if($unreadCount > 0)
-                <span class="ml-auto bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0">
-                    {{ min($unreadCount, 9) }}
+                <span class="ml-auto bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1 flex-shrink-0">
+                    {{ min($unreadCount, 99) }}
                 </span>
             @endif
         </a>
         @endif
 
-        <div class="my-3 border-t border-surface-100"></div>
+        {{-- Statistiques --}}
+        <a href="{{ route('dashboard') }}"
+           class="sidebar-link sidebar-link-default"
+           title="Statistiques">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+            </svg>
+            <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Statistiques</span>
+        </a>
 
+        <div class="my-4 border-t border-surface-100"></div>
+
+        {{-- Mon profil --}}
         <a href="{{ route('profile.edit') }}"
            class="sidebar-link {{ str_starts_with($currentRoute, 'profile') ? 'sidebar-link-active' : 'sidebar-link-default' }}"
-           title="Profil">
+           title="Mon profil">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
             </svg>
-            <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Profil</span>
+            <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Mon profil</span>
         </a>
 
+        {{-- Paramètres --}}
         @if(Route::has('settings.index'))
         <a href="{{ route('settings.index') }}"
            class="sidebar-link {{ str_starts_with($currentRoute, 'settings') ? 'sidebar-link-active' : 'sidebar-link-default' }}"
@@ -129,6 +130,7 @@
         </a>
         @endif
 
+        {{-- Déconnexion --}}
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="sidebar-link sidebar-link-default w-full text-left" title="Déconnexion">
@@ -138,12 +140,12 @@
                 <span class="transition-all duration-200 whitespace-nowrap" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'">Déconnexion</span>
             </button>
         </form>
-    </nav>
+    </div>
 
     <div class="hidden lg:flex border-t border-surface-100 p-3">
         <button
             x-on:click="sidebarOpen = !sidebarOpen"
-            class="w-full flex items-center justify-center gap-2 py-2 text-surface-400 hover:text-surface-600 hover:bg-surface-100 rounded-lg text-sm transition-all duration-200"
+            class="w-full flex items-center justify-center gap-2 py-2.5 text-surface-400 hover:text-surface-600 hover:bg-surface-100 rounded-xl text-sm transition-all duration-200"
             :title="sidebarOpen ? 'Réduire' : 'Étendre'"
         >
             <svg class="w-5 h-5 transition-transform duration-200" :class="sidebarOpen ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
