@@ -3,8 +3,23 @@
 @tailwind utilities;
 
 @layer base {
+    html {
+        scroll-behavior: smooth;
+    }
     body {
         @apply font-sans text-surface-800 antialiased bg-surface-50;
+    }
+}
+
+@layer utilities {
+    .glass {
+        @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-lg;
+    }
+    .glass-dark {
+        @apply bg-surface-900/40 backdrop-blur-xl border border-white/10 shadow-lg;
+    }
+    .text-balance {
+        text-wrap: balance;
     }
 }
 

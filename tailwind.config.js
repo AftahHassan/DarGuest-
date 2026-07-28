@@ -12,7 +12,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Outfit', 'Segoe UI', 'Tahoma', ...defaultTheme.fontFamily.sans],
+                sans: ['Poppins', 'Inter', 'Segoe UI', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 navy: {
