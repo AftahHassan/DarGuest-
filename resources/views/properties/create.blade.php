@@ -156,23 +156,18 @@
             </div>
 
             {{-- Actions --}}
-            <div class="flex items-center justify-between gap-4" data-aos="fade-up">
-                <a href="{{ route('properties.index') }}" class="text-sm font-medium text-surface-500 hover:text-surface-700 transition-colors flex items-center gap-1.5">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
-                    Retour à la liste
-                </a>
-                <div class="flex items-center gap-3">
-                    <a href="{{ route('properties.index') }}" class="px-5 py-2.5 text-sm font-medium text-surface-600 bg-white border border-surface-200 hover:bg-surface-50 hover:text-surface-800 rounded-xl transition-all duration-200 flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-                        Annuler
-                    </a>
-                    <button type="submit" class="px-6 py-2.5 text-sm font-medium text-white bg-navy-700 hover:bg-navy-800 rounded-xl transition-all duration-200 flex items-center gap-2 shadow-sm" :class="saving ? 'opacity-70 pointer-events-none' : ''">
-                        <svg x-show="!saving" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
-                        <svg x-show="saving" x-cloak class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
-                        <span x-show="!saving">Créer le logement</span>
-                        <span x-show="saving" x-cloak>Création...</span>
-                    </button>
-                </div>
+            <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-5 flex items-center justify-end gap-3" data-aos="fade-up">
+                <a href="{{ route('properties.index') }}" class="btn-secondary">Annuler</a>
+                <button type="submit" class="btn-primary" :class="saving ? 'opacity-70 pointer-events-none' : ''">
+                    <template x-if="saving">
+                        <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
+                    </template>
+                    <template x-if="!saving">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                    </template>
+                    <span x-show="!saving">Créer</span>
+                    <span x-show="saving" x-cloak>Création...</span>
+                </button>
             </div>
         </form>
 
