@@ -164,16 +164,12 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse ($recentReservations->take(3) as $reservation)
                     <div class="group bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50">
-                        <div class="h-36 bg-surface-100 relative overflow-hidden">
-                            @if($reservation->property && $reservation->property->images->isNotEmpty())
-                                <img src="{{ Storage::url($reservation->property->images->first()->image) }}" alt="{{ $reservation->property->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-surface-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
-                                    </svg>
-                                </div>
-                            @endif
+                        <div class="h-36 relative overflow-hidden">
+                            <x-gallery :images="$reservation->property?->images ?? collect()" class="!w-full !h-full">
+                                <svg class="w-8 h-8 text-surface-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+                                </svg>
+                            </x-gallery>
                             <div class="absolute top-3 right-3">
                                 @php
                                     $v = match($reservation->status) { 'confirmed' => 'success', 'pending' => 'warning', 'cancelled' => 'danger', default => 'gray' };
@@ -262,17 +258,13 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($recentProperties->take(3) as $property)
                         <div class="group bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50">
-                            <div class="h-40 bg-surface-100 relative overflow-hidden">
-                                @if($property->images->isNotEmpty())
-                                    <img src="{{ Storage::url($property->images->first()->image) }}" alt="{{ $property->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center">
-                                        <svg class="w-10 h-10 text-surface-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
-                                        </svg>
-                                    </div>
-                                @endif
-                                <span class="absolute top-3 right-3 badge {{ $property->status === 'available' ? 'badge-success' : 'badge-gray' }}">
+                            <div class="h-40 relative overflow-hidden">
+                                <x-gallery :images="$property->images" class="!w-full !h-full">
+                                    <svg class="w-10 h-10 text-surface-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+                                    </svg>
+                                </x-gallery>
+                                <span class="absolute top-3 right-3 z-10 badge {{ $property->status === 'available' ? 'badge-success' : 'badge-gray' }}">
                                     {{ $property->status === 'available' ? 'Disponible' : 'Occupé' }}
                                 </span>
                             </div>
