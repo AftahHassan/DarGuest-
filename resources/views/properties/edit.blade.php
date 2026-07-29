@@ -189,6 +189,113 @@
 
             </div>
 
+            {{-- Image Manager --}}
+            <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 sm:p-8 space-y-5" data-aos="fade-up" data-aos-delay="150">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-navy-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-surface-900">Galerie photos</h2>
+                        <p class="text-sm text-surface-500">{{ $property->images->count() }} photo{{ $property->images->count() > 1 ? 's' : '' }}</p>
+                    </div>
+                </div>
+
+                {{-- Image grid --}}
+                @if($property->images->isNotEmpty())
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="image-grid">
+                        @foreach ($property->images as $image)
+                            <div class="relative group rounded-xl overflow-hidden bg-surface-100 aspect-square" data-image-id="{{ $image->id }}">
+                                <img src="{{ Storage::url($image->image) }}" alt="" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
+                                    <button type="button" x-on:click.prevent="$dispatch('open-modal', 'delete-image-{{ $image->id }}')" class="w-8 h-8 rounded-lg bg-white/90 backdrop-blur-sm hover:bg-white text-red-600 flex items-center justify-center transition-all duration-200">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <x-ui.modal id="delete-image-{{ $image->id }}" maxWidth="sm">
+                                <div class="text-center">
+                                    <div class="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-7 h-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-surface-900 mb-1">Supprimer cette photo ?</h3>
+                                    <p class="text-sm text-surface-500 mb-6">Cette action est irréversible.</p>
+                                    <div class="flex items-center justify-center gap-3">
+                                        <button type="button" x-on:click="$dispatch('close-modal', 'delete-image-{{ $image->id }}')" class="btn-secondary text-sm px-5 py-2">Annuler</button>
+                                        <form method="POST" action="{{ route('properties.images.destroy', $image) }}">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="btn-danger text-sm px-5 py-2">Supprimer</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </x-ui.modal>
+                        @endforeach
+                    </div>
+                @endif
+
+                {{-- Upload zone --}}
+                <form method="POST" action="{{ route('properties.images.store', $property) }}" enctype="multipart/form-data"
+                      x-data="{ uploading: false, files: [], previews: [], uploaded: 0, total: 0 }"
+                      x-on:submit="uploading = true"
+                      class="border-2 border-dashed border-surface-200/80 hover:border-navy-300/60 rounded-2xl p-8 text-center transition-all duration-200 cursor-pointer"
+                      x-on:dragover.prevent="$el.classList.add('border-navy-400', 'bg-navy-50/30')"
+                      x-on:dragleave.prevent="$el.classList.remove('border-navy-400', 'bg-navy-50/30')"
+                      x-on:drop.prevent="
+                        $el.classList.remove('border-navy-400', 'bg-navy-50/30');
+                        files = [...$event.dataTransfer.files].filter(f => f.type.startsWith('image/'));
+                        previews = files.map(f => URL.createObjectURL(f));
+                        total = files.length;
+                        uploaded = 0;
+                        if(files.length) $el.querySelector('input[type=file]').files = $event.dataTransfer.files;
+                      ">
+                    @csrf
+                    <input type="file" name="images[]" multiple accept="image/*"
+                           x-on:change="files = [...$event.target.files]; previews = files.map(f => URL.createObjectURL(f)); total = files.length; uploaded = 0;"
+                           class="hidden" id="image-upload">
+
+                    <template x-if="!files.length">
+                        <div>
+                            <label for="image-upload" class="cursor-pointer">
+                                <div class="w-14 h-14 rounded-2xl bg-surface-100 flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-7 h-7 text-surface-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.325 0A4.5 4.5 0 0117.25 19.5H6.75z"/></svg>
+                                </div>
+                                <p class="text-sm font-medium text-surface-700 mb-1">Cliquez ou glissez-déposez vos images ici</p>
+                                <p class="text-xs text-surface-400">PNG, JPG jusqu'à 4 Mo</p>
+                            </label>
+                        </div>
+                    </template>
+
+                    <template x-if="files.length">
+                        <div>
+                            <div class="grid grid-cols-4 sm:grid-cols-6 gap-2 mb-4">
+                                <template x-for="(preview, i) in previews" :key="i">
+                                    <div class="aspect-square rounded-xl overflow-hidden bg-surface-100">
+                                        <img :src="preview" class="w-full h-full object-cover">
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="flex items-center justify-center gap-3">
+                                <button type="submit" class="btn-primary text-sm px-5 py-2" x-show="!uploading">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    Télécharger <span x-text="files.length"></span> photo(s)
+                                </button>
+                                <button type="button" class="btn-secondary text-sm px-5 py-2"
+                                        x-on:click="files = []; previews = []; $el.closest('form').querySelector('input[type=file]').value = ''">
+                                    Annuler
+                                </button>
+                            </div>
+                            <div x-show="uploading" class="mt-4">
+                                <div class="w-full bg-surface-100 rounded-full h-2 overflow-hidden">
+                                    <div class="h-full bg-navy-600 rounded-full transition-all duration-300" :style="`width: ${total ? (uploaded / total) * 100 : 0}%`"></div>
+                                </div>
+                                <p class="text-xs text-surface-500 mt-1" x-text="`${uploaded} / ${total}`"></p>
+                            </div>
+                        </div>
+                    </template>
+                </form>
+            </div>
+
             {{-- Actions --}}
             <div class="flex items-center gap-3" data-aos="fade-up">
                 <button type="submit" x-on:click="$el.classList.add('opacity-70', 'pointer-events-none'); $el.querySelector('.spinner')?.classList.remove('hidden'); $el.querySelector('.btn-text')?.classList.add('hidden')" class="btn-primary">
