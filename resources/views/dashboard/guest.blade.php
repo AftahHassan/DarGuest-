@@ -157,8 +157,12 @@
                                 <p class="text-sm text-surface-500 mt-1">{{ $property->city }}</p>
                                 <p class="text-lg font-bold text-surface-900 mt-3">{{ number_format($property->price_per_night, 0, ',', ' ') }} <span class="text-xs font-normal text-surface-500">MAD/nuit</span></p>
                                 <div class="flex gap-2 mt-4 pt-4 border-t border-surface-200/60">
-                                    <a href="{{ route('properties.show', $property) }}" class="btn-secondary text-sm px-4 py-2 flex-1">Voir</a>
-                                    <a href="{{ route('reservations.create', $property) }}" class="btn-primary text-sm px-4 py-2 flex-1">Réserver</a>
+                                    <a href="{{ route('properties.show', $property) }}" class="btn-primary text-sm px-4 py-2 flex-1">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                                        </svg>
+                                        Voir
+                                    </a>
                                 </div>
                             </div>
                         </div>
