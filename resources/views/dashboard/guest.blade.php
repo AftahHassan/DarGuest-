@@ -2,10 +2,19 @@
     <div class="space-y-12">
 
         {{-- Welcome --}}
-        <div data-aos="fade-up">
-            <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Tableau de bord</span>
-            <h1 class="mt-3 text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight">Bienvenue {{ auth()->user()->first_name }} 👋</h1>
-            <p class="text-surface-500 mt-1">Retrouvez toutes vos réservations.</p>
+        <div data-aos="fade-up" class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Tableau de bord</span>
+                <h1 class="mt-3 text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight">Bienvenue {{ auth()->user()->first_name }} 👋</h1>
+                <p class="text-surface-500 mt-1">Retrouvez toutes vos réservations.</p>
+            </div>
+            <a href="{{ route('properties.index') }}"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-white text-surface-900 font-semibold rounded-2xl border border-surface-200/60 hover:bg-white/90 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-0.5">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                </svg>
+                Voir les logements
+            </a>
         </div>
 
         {{-- Stats Cards --}}
