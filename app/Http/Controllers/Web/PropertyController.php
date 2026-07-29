@@ -102,6 +102,8 @@ class PropertyController extends Controller
     {
         $this->authorize('update', $property);
 
+        $property->load('images');
+
         return view('properties.edit', compact('property'));
     }
 

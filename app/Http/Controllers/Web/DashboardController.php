@@ -49,7 +49,7 @@ class DashboardController extends Controller
             )->where('urgency', false)->count() * 5,
         ];
 
-        $recentProperties = Property::where('owner_id', $user->id)->latest()->take(6)->get();
+        $recentProperties = Property::where('owner_id', $user->id)->with('images')->latest()->take(6)->get();
 
         $recentConversations = Conversation::whereHas('reservation.property', fn ($q) => $q->where('owner_id', $user->id))
             ->with('reservation.property', 'reservation.guest')

@@ -2,10 +2,17 @@
     <div class="space-y-8">
 
         {{-- Header --}}
-        <div>
-            <p class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Logements</p>
-            <h1 class="text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight mt-1">Modifier le logement</h1>
-            <p class="text-surface-500 mt-1">Modifiez les informations de votre logement.</p>
+        <div class="flex items-start justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <a href="{{ route('properties.show', $property) }}" class="text-xs font-semibold text-navy-700 uppercase tracking-widest hover:text-navy-900 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+                        {{ $property->title }}
+                    </a>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight">Modifier le logement</h1>
+                <p class="text-surface-500 mt-1">Modifiez les informations de votre logement.</p>
+            </div>
         </div>
 
         {{-- Property summary card --}}
@@ -44,7 +51,12 @@
         </div>
 
         @if (session('status'))
-            <div class="alert-success">{{ session('status') }}</div>
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="alert-success flex items-center justify-between" role="alert">
+                <span>{{ session('status') }}</span>
+                <button type="button" x-on:click="show = false" class="ml-4 text-emerald-700 hover:text-emerald-900">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
         @endif
 
         <form method="POST" action="{{ route('properties.update', $property) }}" class="space-y-6">
@@ -179,9 +191,12 @@
 
             {{-- Actions --}}
             <div class="flex items-center gap-3" data-aos="fade-up">
-                <button type="submit" class="btn-primary">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
-                    Enregistrer les modifications
+                <button type="submit" x-on:click="$el.classList.add('opacity-70', 'pointer-events-none'); $el.querySelector('.spinner')?.classList.remove('hidden'); $el.querySelector('.btn-text')?.classList.add('hidden')" class="btn-primary">
+                    <svg x-cloak class="spinner hidden w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
+                    <span class="btn-text flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
+                        Enregistrer les modifications
+                    </span>
                 </button>
                 <a href="{{ route('properties.show', $property) }}" class="btn-secondary">Annuler</a>
             </div>

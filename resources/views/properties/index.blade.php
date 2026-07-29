@@ -19,7 +19,12 @@
         </div>
 
         @if (session('status'))
-            <div class="alert-success">{{ session('status') }}</div>
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="alert-success flex items-center justify-between" role="alert">
+                <span>{{ session('status') }}</span>
+                <button type="button" x-on:click="show = false" class="ml-4 text-emerald-700 hover:text-emerald-900">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
         @endif
 
         {{-- Filters --}}
@@ -86,6 +91,7 @@
 
         {{-- Grid --}}
         @if ($properties->count())
+            <div x-data="{ deleteId: null }">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($properties as $property)
                     <div class="group bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50" data-aos="fade-up" data-aos-delay="{{ $loop->index * 50 }}">
@@ -128,8 +134,9 @@
                                     Voir
                                 </a>
                                 @can('update', $property)
-                                    <a href="{{ route('properties.edit', $property) }}" class="bg-white/90 backdrop-blur-sm hover:bg-white text-surface-900 text-xs font-medium rounded-xl py-2.5 px-4 transition-all duration-200">
-                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
+                                    <a href="{{ route('properties.edit', $property) }}" class="flex-1 bg-white/90 backdrop-blur-sm hover:bg-white text-surface-900 text-xs font-medium rounded-xl py-2.5 text-center transition-all duration-200">
+                                        <svg class="w-4 h-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
+                                        Modifier
                                     </a>
                                 @endcan
                             </div>
@@ -161,7 +168,20 @@
 
                             <div class="flex items-center justify-between mt-4 pt-4 border-t border-surface-200/60">
                                 <p class="text-lg font-bold text-surface-900">{{ number_format($property->price_per_night, 0, ',', ' ') }} <span class="text-xs font-normal text-surface-500">MAD/nuit</span></p>
-                                <p class="text-xs text-surface-400">{{ $property->created_at->format('d/m/Y') }}</p>
+                                @can('update', $property)
+                                    <div class="flex gap-1">
+                                        <a href="{{ route('properties.edit', $property) }}" class="text-xs font-medium text-navy-600 hover:text-navy-800 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-navy-50 flex items-center gap-1">
+                                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
+                                            Modifier
+                                        </a>
+                                        @can('delete', $property)
+                                            <button type="button" x-on:click="deleteId = {{ $property->id }}; $dispatch('open-modal', 'delete-property')" class="text-xs font-medium text-red-500 hover:text-red-700 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-red-50 flex items-center gap-1">
+                                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+                                                Supprimer
+                                            </button>
+                                        @endcan
+                                    </div>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -171,6 +191,29 @@
             {{-- Pagination --}}
             <div data-aos="fade-up">
                 <x-ui.pagination :paginator="$properties" />
+            </div>
+
+            {{-- Delete property modal --}}
+            <x-ui.modal id="delete-property" maxWidth="sm">
+                <div class="text-center">
+                    <div class="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-7 h-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-surface-900 mb-1">Supprimer ce logement ?</h3>
+                    <p class="text-sm text-surface-500 mb-2">Cette action est irréversible.</p>
+                    <p class="text-xs text-surface-400 mb-6">Toutes les données associées seront définitivement supprimées.</p>
+                    <div class="flex items-center justify-center gap-3">
+                        <button type="button" x-on:click="$dispatch('close-modal', 'delete-property')" class="btn-secondary text-sm px-5 py-2">Annuler</button>
+                        <form x-ref="deleteForm" method="POST" x-bind:action="'{{ url('properties') }}/' + deleteId">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="btn-danger text-sm px-5 py-2">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                Supprimer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </x-ui.modal>
             </div>
         @else
             {{-- Empty state --}}
