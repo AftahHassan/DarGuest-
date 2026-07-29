@@ -18,10 +18,41 @@ class PropertyController extends Controller
     public function index(): View
     {
         $properties = auth()->user()->isOwner()
-            ? Property::where('owner_id', auth()->id())->with('images')->latest()->paginate(10)
-            : Property::available()->with('images')->latest()->paginate(10);
+            ? Property::where('owner_id', auth()->id())
+            : Property::available();
 
-        return view('properties.index', compact('properties'));
+        $properties = $properties->with('images');
+
+        if ($status = request('status')) {
+            $properties->where('status', $status);
+        }
+
+        if ($search = request('search')) {
+            $properties->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('city', 'like', "%{$search}%");
+            });
+        }
+
+        if ($city = request('city')) {
+            $properties->where('city', $city);
+        }
+
+        if ($priceMin = request('price_min')) {
+            $properties->where('price_per_night', '>=', (float) $priceMin);
+        }
+
+        if ($priceMax = request('price_max')) {
+            $properties->where('price_per_night', '<=', (float) $priceMax);
+        }
+
+        $cities = Property::where('owner_id', auth()->id())
+            ->select('city')->distinct()->orderBy('city')
+            ->pluck('city');
+
+        $properties = $properties->latest()->paginate(10);
+
+        return view('properties.index', compact('properties', 'cities'));
     }
 
     public function create(): View
