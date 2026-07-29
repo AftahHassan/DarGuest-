@@ -114,11 +114,11 @@ class DashboardController extends Controller
             'unread_notifications'  => $user->notifications()->where('is_read', false)->count(),
         ];
 
-        $availableProperties = Property::available()->latest()->take(6)->get();
+        $availableProperties = Property::available()->with('images')->latest()->take(6)->get();
 
         $upcomingReservations = Reservation::where('guest_id', $user->id)
             ->where('check_in_date', '>=', now())
-            ->with('property')
+            ->with('property.images')
             ->orderBy('check_in_date')
             ->take(3)
             ->get();
