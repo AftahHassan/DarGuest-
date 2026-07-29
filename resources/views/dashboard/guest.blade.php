@@ -65,7 +65,7 @@
                         <div class="group bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50">
                             <div class="h-40 bg-surface-100 relative overflow-hidden">
                                 @if($reservation->property && $reservation->property->images->isNotEmpty())
-                                    <img src="{{ Storage::url($reservation->property->images->first()->path) }}" alt="{{ $reservation->property->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <img src="{{ Storage::url($reservation->property->images->first()->image) }}" alt="{{ $reservation->property->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 @else
                                     <div class="w-full h-full flex items-center justify-center">
                                         <svg class="w-10 h-10 text-surface-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
