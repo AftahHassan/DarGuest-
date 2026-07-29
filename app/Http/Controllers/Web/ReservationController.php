@@ -19,8 +19,31 @@ class ReservationController extends Controller
         $user = auth()->user();
 
         $reservations = $user->isOwner()
-            ? Reservation::whereHas('property', fn ($q) => $q->where('owner_id', $user->id))->with('property', 'guest')->latest()->paginate(10)
-            : Reservation::where('guest_id', $user->id)->with('property')->latest()->paginate(10);
+            ? Reservation::whereHas('property', fn ($q) => $q->where('owner_id', $user->id))
+            : Reservation::where('guest_id', $user->id);
+
+        $reservations = $reservations->with('property', 'guest');
+
+        if ($status = request('status')) {
+            $reservations->where('status', $status);
+        }
+
+        if ($search = request('search')) {
+            $reservations->where(function ($q) use ($search) {
+                $q->whereHas('property', fn ($q) => $q->where('title', 'like', "%{$search}%"))
+                  ->orWhereHas('guest', fn ($q) => $q->whereRaw("concat(first_name, ' ', last_name) like ?", ["%{$search}%"]));
+            });
+        }
+
+        if ($dateFrom = request('date_from')) {
+            $reservations->whereDate('check_in_date', '>=', $dateFrom);
+        }
+
+        if ($dateTo = request('date_to')) {
+            $reservations->whereDate('check_out_date', '<=', $dateTo);
+        }
+
+        $reservations = $reservations->latest()->paginate(10);
 
         return view('reservations.index', compact('reservations'));
     }

@@ -6,23 +6,35 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'DarGuest') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=outfit:300,400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=poppins:300,400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            AOS.init({
+                duration: 600,
+                easing: 'ease-out-cubic',
+                once: true,
+                offset: 50,
+            });
+        });
+    </script>
     <div class="min-h-screen bg-surface-50" x-data="{ sidebarOpen: true, mobileSidebar: false }">
         @include('layouts.sidebar')
         @include('layouts.header')
 
         <main
-            class="transition-all duration-300 pt-16"
+            class="transition-all duration-300 pt-16 min-h-screen"
             :class="{
                 'ml-64': sidebarOpen && !mobileSidebar,
                 'ml-[72px]': !sidebarOpen && !mobileSidebar,
                 'ml-0': mobileSidebar
             }"
         >
-            <div class="p-6">
+            <div class="p-6 lg:p-8 max-w-7xl mx-auto">
                 {{ $slot }}
             </div>
         </main>

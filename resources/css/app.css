@@ -24,12 +24,16 @@
 }
 
 @layer components {
-    /* === Cards === */
     .card {
         @apply bg-white border border-surface-200 rounded-xl shadow-card;
     }
+    .card-hover {
+        @apply card hover:shadow-card-hover hover:border-surface-300 transition-all duration-200;
+    }
+    .card-glass {
+        @apply bg-white/70 backdrop-blur-xl border border-white/20 rounded-2xl shadow-lg;
+    }
 
-    /* === Buttons === */
     .btn {
         @apply inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
     }
@@ -49,7 +53,6 @@
         @apply btn p-2 rounded-lg text-surface-400 hover:text-surface-600 hover:bg-surface-100;
     }
 
-    /* === Badges === */
     .badge {
         @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border;
     }
@@ -69,7 +72,6 @@
         @apply badge bg-surface-100 text-surface-600 border-surface-200;
     }
 
-    /* === Alerts === */
     .alert {
         @apply px-4 py-3 rounded-xl text-sm font-medium border;
     }
@@ -80,7 +82,6 @@
         @apply alert bg-red-50 text-red-700 border-red-200;
     }
 
-    /* === Inputs === */
     .input-field {
         @apply w-full bg-white border border-surface-200 text-surface-800 rounded-lg text-sm transition-all duration-200 px-4 py-2.5;
         @apply focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20 focus:outline-none;
@@ -93,7 +94,6 @@
         @apply input-field appearance-none;
     }
 
-    /* === Sidebar === */
     .sidebar {
         @apply fixed top-0 left-0 z-40 h-full bg-white border-r border-surface-200 transition-all duration-300;
         @apply lg:w-64 w-64;
@@ -102,25 +102,22 @@
         @apply lg:w-[72px];
     }
     .sidebar-link {
-        @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200;
+        @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200;
     }
     .sidebar-link-active {
-        @apply sidebar-link bg-navy-50 text-navy-700;
+        @apply sidebar-link bg-navy-700 text-white shadow-sm;
     }
     .sidebar-link-default {
-        @apply sidebar-link text-surface-600 hover:bg-surface-50 hover:text-surface-900;
+        @apply sidebar-link text-surface-400 hover:bg-surface-100 hover:text-surface-700;
     }
-
-    /* === Header === */
-    .header {
-        @apply fixed top-0 right-0 z-30 h-16 bg-white border-b border-surface-200 transition-all duration-300;
+    .sidebar-header {
+        @apply fixed top-0 right-0 z-30 h-16 bg-white/80 backdrop-blur-xl border-b border-surface-200 transition-all duration-300;
         @apply left-64;
     }
-    .header-collapsed {
+    .sidebar-header-collapsed {
         @apply lg:left-[72px];
     }
 
-    /* === Avatars === */
     .avatar {
         @apply rounded-full flex items-center justify-center font-semibold text-sm flex-shrink-0;
     }
@@ -137,7 +134,6 @@
         @apply avatar w-16 h-16 text-xl;
     }
 
-    /* === Search === */
     .search-bar {
         @apply relative;
     }
@@ -148,7 +144,6 @@
         @apply absolute left-3 top-1/2 -translate-y-1/2 text-surface-400 pointer-events-none;
     }
 
-    /* === Empty State === */
     .empty-state {
         @apply flex flex-col items-center justify-center py-16 px-6 text-center;
     }
@@ -156,7 +151,6 @@
         @apply w-14 h-14 rounded-2xl bg-surface-100 flex items-center justify-center mb-4;
     }
 
-    /* === Toast === */
     .toast {
         @apply fixed bottom-4 right-4 z-50 max-w-sm;
     }
@@ -170,15 +164,14 @@
         @apply bg-white border-red-200;
     }
 
-    /* === Table === */
     .table {
         @apply w-full text-sm text-left;
     }
     .table thead {
-        @apply bg-surface-50 text-surface-600 font-medium text-xs uppercase tracking-wider;
+        @apply text-surface-500 font-medium text-xs uppercase tracking-wider;
     }
     .table th {
-        @apply px-4 py-3;
+        @apply px-4 py-3 font-medium;
     }
     .table td {
         @apply px-4 py-3 border-t border-surface-100;
