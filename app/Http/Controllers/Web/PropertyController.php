@@ -17,8 +17,11 @@ class PropertyController extends Controller
 
     public function index(): View
     {
-        $properties = auth()->user()->isOwner()
-            ? Property::where('owner_id', auth()->id())
+        $user = auth()->user();
+        $isOwner = $user->isOwner();
+
+        $properties = $isOwner
+            ? Property::where('owner_id', $user->id)
             : Property::available();
 
         $properties = $properties->with('images');
@@ -46,13 +49,29 @@ class PropertyController extends Controller
             $properties->where('price_per_night', '<=', (float) $priceMax);
         }
 
-        $cities = Property::where('owner_id', auth()->id())
-            ->select('city')->distinct()->orderBy('city')
-            ->pluck('city');
+        $sort = request('sort');
+        $properties->when($sort, function ($q, $sort) {
+            return match ($sort) {
+                'price_asc' => $q->orderBy('price_per_night'),
+                'price_desc' => $q->orderBy('price_per_night', 'desc'),
+                'name_asc' => $q->orderBy('title'),
+                'name_desc' => $q->orderBy('title', 'desc'),
+                'date_asc' => $q->oldest(),
+                default => $q->latest(),
+            };
+        }, fn ($q) => $q->latest());
 
-        $properties = $properties->latest()->paginate(10);
+        $cities = $isOwner
+            ? Property::where('owner_id', $user->id)->select('city')->distinct()->orderBy('city')->pluck('city')
+            : Property::available()->select('city')->distinct()->orderBy('city')->pluck('city');
 
-        return view('properties.index', compact('properties', 'cities'));
+        $totalCount = $isOwner
+            ? Property::where('owner_id', $user->id)->count()
+            : Property::available()->count();
+
+        $properties = $properties->paginate(12);
+
+        return view('properties.index', compact('properties', 'cities', 'totalCount'));
     }
 
     public function create(): View
@@ -82,6 +101,8 @@ class PropertyController extends Controller
     public function edit(Property $property): View
     {
         $this->authorize('update', $property);
+
+        $property->load('images');
 
         return view('properties.edit', compact('property'));
     }
@@ -165,6 +186,12 @@ class PropertyController extends Controller
             'address' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:30'],
         ]);
+
+        if ($editId = $request->input('edit_id')) {
+            $reco = $property->recommendations()->findOrFail($editId);
+            $reco->update($data);
+            return back()->with('status', 'Recommandation mise à jour.');
+        }
 
         $property->recommendations()->create($data);
 
