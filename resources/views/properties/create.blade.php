@@ -30,7 +30,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 {{-- Left: General info --}}
-                <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 sm:p-8 space-y-5" data-aos="fade-up">
+                <div class="panel p-6 sm:p-8 space-y-5">
                     <div>
                         <h2 class="text-lg font-semibold text-surface-900">Informations générales</h2>
                         <p class="text-sm text-surface-500 mt-0.5">Les détails essentiels de votre logement.</p>
@@ -86,7 +86,7 @@
                 </div>
 
                 {{-- Right: Property details --}}
-                <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 sm:p-8 space-y-5" data-aos="fade-up" data-aos-delay="100">
+                <div class="panel p-6 sm:p-8 space-y-5">
                     <div>
                         <h2 class="text-lg font-semibold text-surface-900">Informations logement</h2>
                         <p class="text-sm text-surface-500 mt-0.5">Capacité, tarifs et disponibilité.</p>
@@ -156,7 +156,7 @@
             </div>
 
             {{-- Actions --}}
-            <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-5 flex items-center justify-end gap-3" data-aos="fade-up">
+            <div class="panel p-5 flex items-center justify-end gap-3">
                 <a href="{{ route('properties.index') }}" class="btn-secondary">Annuler</a>
                 <button type="submit" class="btn-primary inline-flex items-center gap-2" :class="saving ? 'opacity-70 pointer-events-none' : ''">
                     <svg x-show="!saving" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>

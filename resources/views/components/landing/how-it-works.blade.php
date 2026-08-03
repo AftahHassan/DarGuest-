@@ -2,7 +2,7 @@
     <div class="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-surface-200 to-transparent"></div>
 
     <div class="max-w-7xl mx-auto px-6">
-        <div data-aos="fade-up" class="text-center max-w-2xl mx-auto mb-16">
+        <div class="text-center max-w-2xl mx-auto mb-16">
             <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Processus</span>
             <h2 class="mt-4 text-3xl sm:text-4xl font-bold text-surface-900 tracking-tight">Comment ça marche</h2>
             <p class="mt-3 text-surface-500">En quelques étapes simples, votre location est opérationnelle.</p>
@@ -20,7 +20,7 @@
             @endphp
 
             @foreach ($steps as $i => $step)
-                <div data-aos="fade-up" data-aos-delay="{{ $i * 100 }}" class="relative flex flex-col items-center text-center">
+                <div class="relative flex flex-col items-center text-center">
                     {{-- Connecting line --}}
                     @if (!$loop->last)
                         <div class="hidden md:block absolute top-12 left-[60%] w-[80%] h-px border-t-2 border-dashed border-surface-200"></div>

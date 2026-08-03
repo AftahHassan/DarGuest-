@@ -28,4 +28,13 @@ class Conversation extends Model
     {
         return $this->hasMany(Message::class)->orderBy('created_at');
     }
+
+    public function markAsRead(int $userId): void
+    {
+        $this->messages()
+            ->where('sender_type', '!=', 'ai')
+            ->where('sender_id', '!=', $userId)
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
+    }
 }

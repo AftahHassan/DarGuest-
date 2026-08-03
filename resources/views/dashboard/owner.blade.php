@@ -2,14 +2,14 @@
     <div class="space-y-12">
 
         {{-- Welcome --}}
-        <div data-aos="fade-up">
+        <div>
             <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Tableau de bord</span>
             <h1 class="mt-3 text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight">Bonjour {{ auth()->user()->first_name }} 👋</h1>
             <p class="text-surface-500 mt-1">{{ now()->format('l d F Y') }}</p>
         </div>
 
         {{-- Stats Cards --}}
-        <div data-aos="fade-up" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
             @php
                 $statCards = [
                     ['icon' => 'M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25', 'value' => $stats['total_properties'], 'label' => 'Logements', 'change' => $stats['property_change'], 'color' => 'navy'],
@@ -20,7 +20,7 @@
                 ];
             @endphp
             @foreach ($statCards as $i => $card)
-                <div class="group bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50">
+                <div class="group panel-hover p-5">
                     <div class="flex items-center justify-between mb-3">
                         <div class="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center group-hover:bg-navy-100 transition-colors">
                             <svg class="w-5 h-5 text-navy-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -56,7 +56,7 @@
 
         {{-- Graphique + Urgences --}}
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div data-aos="fade-up" class="lg:col-span-2 bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl hover:shadow-xl transition-all duration-300 hover:border-navy-200/50">
+            <div class="lg:col-span-2 panel-hover">
                 <div class="px-6 py-5 border-b border-surface-200/60">
                     <div class="flex items-center gap-2 mb-1">
                         <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Graphique</span>
@@ -112,7 +112,7 @@
                 </div>
             </div>
 
-            <div data-aos="fade-up" data-aos-delay="100" class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl hover:shadow-xl transition-all duration-300 hover:border-navy-200/50">
+            <div class="panel-hover">
                 <div class="px-6 py-5 border-b border-surface-200/60 flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <div class="w-2 h-2 rounded-full bg-red-500 {{ $urgentAnalyses->count() > 0 ? 'animate-pulse' : '' }}"></div>
@@ -153,7 +153,7 @@
         </div>
 
         {{-- Dernières réservations --}}
-        <div data-aos="fade-up">
+        <div>
             <div class="flex items-center justify-between mb-5">
                 <div>
                     <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Réservations</span>
@@ -163,7 +163,7 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse ($recentReservations->take(3) as $reservation)
-                    <div class="group bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50">
+                    <div class="group panel-hover overflow-hidden">
                         <div class="h-36 relative overflow-hidden">
                             <x-gallery :images="$reservation->property?->images ?? collect()" class="!w-full !h-full">
                                 <svg class="w-8 h-8 text-surface-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
@@ -218,7 +218,7 @@
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-12 text-center lg:col-span-3">
+                    <div class="panel p-12 text-center lg:col-span-3">
                         <div class="w-14 h-14 rounded-2xl bg-surface-100 flex items-center justify-center mx-auto mb-4">
                             <svg class="w-7 h-7 text-surface-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
@@ -231,7 +231,7 @@
         </div>
 
         {{-- Mes logements --}}
-        <div data-aos="fade-up">
+        <div>
             <div class="flex items-center justify-between mb-5">
                 <div>
                     <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Propriétés</span>
@@ -240,7 +240,7 @@
                 <a href="{{ route('properties.index') }}" class="text-sm font-medium text-navy-700 hover:text-navy-800 transition-colors">Voir tout</a>
             </div>
             @if ($recentProperties->isEmpty())
-                <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-12 text-center">
+                <div class="panel p-12 text-center">
                     <div class="w-14 h-14 rounded-2xl bg-surface-100 flex items-center justify-center mx-auto mb-4">
                         <svg class="w-7 h-7 text-surface-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
@@ -257,7 +257,7 @@
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($recentProperties->take(3) as $property)
-                        <div class="group bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50">
+                        <div class="group panel-hover overflow-hidden">
                             <div class="h-44 relative overflow-hidden bg-surface-100">
                                 <x-gallery :images="$property->images" class="!w-full !h-full">
                                     <div class="w-full h-full flex items-center justify-center">
@@ -324,7 +324,7 @@
         </div>
 
         {{-- Assistant IA --}}
-        <div data-aos="fade-up" class="bg-gradient-to-br from-navy-700 to-navy-800 rounded-2xl p-6 sm:p-8 text-white">
+        <div class="bg-gradient-to-br from-navy-700 to-navy-800 rounded-2xl p-6 sm:p-8 text-white">
             <div class="flex items-center gap-3 mb-6">
                 <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

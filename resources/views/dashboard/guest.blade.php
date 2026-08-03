@@ -2,7 +2,7 @@
     <div class="space-y-12">
 
         {{-- Welcome --}}
-        <div data-aos="fade-up" class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
                 <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Tableau de bord</span>
                 <h1 class="mt-3 text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight">Bienvenue {{ auth()->user()->first_name }} 👋</h1>
@@ -18,7 +18,7 @@
         </div>
 
         {{-- Stats Cards --}}
-        <div data-aos="fade-up" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @php
                 $guestStatCards = [
                     ['icon' => 'M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5', 'value' => $stats['total_reservations'], 'label' => 'Mes voyages'],
@@ -28,7 +28,7 @@
                 ];
             @endphp
             @foreach ($guestStatCards as $i => $card)
-                <div class="group bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50">
+                <div class="group panel-hover p-6">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-xl bg-navy-50 flex items-center justify-center group-hover:bg-navy-100 transition-colors">
                             <svg class="w-6 h-6 text-navy-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -45,7 +45,7 @@
         </div>
 
         {{-- Mes réservations --}}
-        <div data-aos="fade-up">
+        <div>
             <div class="flex items-center justify-between mb-5">
                 <div>
                     <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Réservations</span>
@@ -54,7 +54,7 @@
                 <a href="{{ route('reservations.index') }}" class="text-sm font-medium text-navy-700 hover:text-navy-800 transition-colors">Voir tout</a>
             </div>
             @if ($upcomingReservations->isEmpty())
-                <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-12 text-center">
+                <div class="panel p-12 text-center">
                     <div class="w-14 h-14 rounded-2xl bg-surface-100 flex items-center justify-center mx-auto mb-4">
                         <svg class="w-7 h-7 text-surface-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
@@ -71,7 +71,7 @@
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($upcomingReservations->take(3) as $reservation)
-                        <div class="group bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50">
+                        <div class="group panel-hover overflow-hidden">
                             <div class="h-40 relative overflow-hidden">
                                 <x-gallery :images="$reservation->property?->images ?? collect()" class="!w-full !h-full">
                                     <svg class="w-10 h-10 text-surface-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
@@ -115,7 +115,7 @@
         </div>
 
         {{-- Logements disponibles --}}
-        <div data-aos="fade-up">
+        <div>
             <div class="flex items-center justify-between mb-5">
                 <div>
                     <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Découvrir</span>
@@ -124,7 +124,7 @@
                 <a href="{{ route('properties.index') }}" class="text-sm font-medium text-navy-700 hover:text-navy-800 transition-colors">Voir tout</a>
             </div>
             @if ($availableProperties->isEmpty())
-                <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-12 text-center">
+                <div class="panel p-12 text-center">
                     <div class="w-14 h-14 rounded-2xl bg-surface-100 flex items-center justify-center mx-auto mb-4">
                         <svg class="w-7 h-7 text-surface-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
@@ -135,7 +135,7 @@
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($availableProperties->take(3) as $property)
-                        <div class="group bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50">
+                        <div class="group panel-hover overflow-hidden">
                             <div class="h-40 relative overflow-hidden">
                                 <x-gallery :images="$property->images" class="!w-full !h-full">
                                     <svg class="w-10 h-10 text-surface-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">

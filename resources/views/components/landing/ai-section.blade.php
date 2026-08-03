@@ -5,7 +5,7 @@
 
     <div class="relative max-w-7xl mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div data-aos="fade-right">
+            <div>
                 <span class="text-xs font-semibold text-navy-200 uppercase tracking-widest">Intelligence Artificielle</span>
                 <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
                     Une IA qui travaille<br>
@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div data-aos="fade-left" class="relative">
+            <div class="relative">
                 <div class="glass rounded-3xl p-8 border-white/10">
                     {{-- Chat mockup --}}
                     <div class="space-y-4">

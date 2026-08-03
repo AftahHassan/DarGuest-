@@ -4,7 +4,7 @@
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-navy-50/30 rounded-full blur-3xl -z-10"></div>
 
     <div class="relative max-w-7xl mx-auto px-6">
-        <div data-aos="fade-up" class="text-center max-w-2xl mx-auto mb-16">
+        <div class="text-center max-w-2xl mx-auto mb-16">
             <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Fonctionnalités</span>
             <h2 class="mt-4 text-3xl sm:text-4xl font-bold text-surface-900 tracking-tight">Tout ce dont vous avez besoin</h2>
             <p class="mt-3 text-surface-500">Une plateforme complète pour gérer vos locations saisonnières sans effort.</p>
@@ -21,7 +21,7 @@
             @endphp
 
             @foreach ($features as $i => $feature)
-                <div data-aos="fade-up" data-aos-delay="{{ $i * 100 }}"
+                <div
                      class="group relative bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 sm:p-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50">
                     <div class="w-12 h-12 rounded-xl bg-navy-50 flex items-center justify-center mb-5 group-hover:bg-navy-100 transition-colors">
                         <svg class="w-6 h-6 text-navy-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

@@ -8,7 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Message extends Model
 {
-    protected $fillable = ['conversation_id', 'sender_id', 'sender_type', 'message'];
+    protected $fillable = ['conversation_id', 'sender_id', 'sender_type', 'message', 'read_at'];
+
+    protected function casts(): array
+    {
+        return [
+            'read_at' => 'datetime',
+        ];
+    }
 
     public function conversation()
     {

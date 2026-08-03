@@ -28,7 +28,7 @@
         @endif
 
         {{-- Filters --}}
-        <form method="GET" class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-5 space-y-4" data-aos="fade-up">
+        <form method="GET" class="panel p-5 space-y-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
                 <div class="lg:col-span-2">
                     <label class="text-xs font-semibold text-surface-500 uppercase tracking-wider">Rechercher</label>
@@ -85,7 +85,7 @@
         </form>
 
         {{-- Results count --}}
-        <p class="text-sm text-surface-500" data-aos="fade-up">
+        <p class="text-sm text-surface-500">
             <span class="font-semibold text-surface-700">{{ $properties->total() }}</span> logement{{ $properties->total() > 1 ? 's' : '' }} trouvé{{ $properties->total() > 1 ? 's' : '' }}
         </p>
 
@@ -94,7 +94,7 @@
             <div x-data="{ deleteId: null }">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($properties as $property)
-                    <div class="group bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:border-navy-200/50" data-aos="fade-up" data-aos-delay="{{ $loop->index * 50 }}">
+                    <div class="group panel-hover overflow-hidden">
                         {{-- Image --}}
                         <div class="relative h-52 overflow-hidden bg-surface-100">
                             <x-gallery :images="$property->images" class="!w-full !h-full">
@@ -189,7 +189,7 @@
             </div>
 
             {{-- Pagination --}}
-            <div data-aos="fade-up">
+            <div>
                 <x-ui.pagination :paginator="$properties" />
             </div>
 
@@ -217,7 +217,7 @@
             </div>
         @else
             {{-- Empty state --}}
-            <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-12 sm:p-16 text-center" data-aos="fade-up">
+            <div class="panel p-12 sm:p-16 text-center">
                 <div class="w-16 h-16 rounded-2xl bg-surface-100 flex items-center justify-center mx-auto mb-5">
                     <svg class="w-8 h-8 text-surface-400" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
