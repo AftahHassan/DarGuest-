@@ -16,6 +16,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 
+    
     <style>
         body { font-family: 'Poppins', 'Inter', sans-serif; }
         .text-balance { text-wrap: balance; }
