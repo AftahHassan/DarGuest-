@@ -3,7 +3,7 @@
 
         {{-- Status toast --}}
         @if (session('status'))
-            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="alert-success flex items-center justify-between" data-aos="fade-down" role="alert">
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="alert-success flex items-center justify-between" role="alert">
                 <span>{{ session('status') }}</span>
                 <button type="button" x-on:click="show = false" class="ml-4 text-emerald-700 hover:text-emerald-900">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -14,7 +14,7 @@
         {{-- ============================== --}}
         {{-- HERO HEADER                    --}}
         {{-- ============================== --}}
-        <div class="relative h-[300px] sm:h-[420px] rounded-2xl overflow-hidden bg-surface-100" data-aos="fade-up">
+        <div class="relative h-[300px] sm:h-[420px] rounded-2xl overflow-hidden bg-surface-100">
             <x-gallery :images="$property->images" class="!w-full !h-full">
                 <div class="w-full h-full flex items-center justify-center bg-surface-100">
                     <svg class="w-16 h-16 text-surface-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
@@ -81,7 +81,7 @@
             <div class="lg:col-span-2 space-y-6">
 
                 {{-- General info --}}
-                <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 sm:p-8" data-aos="fade-up">
+                <div class="panel p-6 sm:p-8">
                     <div class="flex items-center gap-3 mb-5">
                         <div class="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center flex-shrink-0">
                             <svg class="w-5 h-5 text-navy-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"/></svg>
@@ -120,7 +120,7 @@
 
                 {{-- Photos gallery --}}
                 @can('update', $property)
-                    <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 sm:p-8" data-aos="fade-up">
+                    <div class="panel p-6 sm:p-8">
                         <div class="flex items-center justify-between mb-5">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center flex-shrink-0">
@@ -235,7 +235,7 @@
 
                 {{-- Practical info --}}
                 @can('update', $property)
-                    <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 sm:p-8" data-aos="fade-up">
+                    <div class="panel p-6 sm:p-8">
                         <div class="flex items-center gap-3 mb-5">
                             <div class="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center flex-shrink-0">
                                 <svg class="w-5 h-5 text-navy-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
@@ -346,7 +346,7 @@
                 @endcan
 
                 {{-- Recommendations --}}
-                <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 sm:p-8" data-aos="fade-up">
+                <div class="panel p-6 sm:p-8">
                     <div class="flex items-center justify-between mb-5">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center flex-shrink-0">
@@ -499,7 +499,7 @@
             <div class="space-y-6">
 
                 {{-- Price card --}}
-                <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6" data-aos="fade-up">
+                <div class="panel p-6">
                     <p class="text-3xl font-bold text-surface-900">{{ number_format($property->price_per_night, 0, ',', ' ') }} <span class="text-sm font-normal text-surface-500">MAD / nuit</span></p>
                     @if($property->status === 'available')
                         <p class="text-xs text-emerald-600 font-medium mt-2">Prêt à recevoir des réservations</p>
@@ -512,7 +512,7 @@
 
                 {{-- Owner card (for guests) --}}
                 @if(auth()->user()->isGuest())
-                    <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6" data-aos="fade-up">
+                    <div class="panel p-6">
                         <div class="flex items-center gap-3 mb-4">
                             <div class="w-10 h-10 rounded-full bg-navy-700 text-white flex items-center justify-center text-sm font-semibold">
                                 {{ strtoupper(substr($property->owner?->first_name ?? '?', 0, 1)) }}{{ strtoupper(substr($property->owner?->last_name ?? '?', 0, 1)) }}

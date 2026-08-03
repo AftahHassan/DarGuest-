@@ -16,7 +16,7 @@
         </div>
 
         {{-- Property summary card --}}
-        <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center gap-4" data-aos="fade-up">
+        <div class="panel p-5 flex flex-col sm:flex-row sm:items-center gap-4">
             <div class="w-16 h-16 rounded-xl bg-surface-100 overflow-hidden flex-shrink-0">
                 @if($property->images->isNotEmpty())
                     <img src="{{ Storage::url($property->images->first()->image) }}" alt="" class="w-full h-full object-cover">
@@ -65,7 +65,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 {{-- Left: General info --}}
-                <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 sm:p-8 space-y-5" data-aos="fade-up">
+                <div class="panel p-6 sm:p-8 space-y-5">
                     <div>
                         <h2 class="text-lg font-semibold text-surface-900">Informations générales</h2>
                         <p class="text-sm text-surface-500 mt-0.5">Les détails essentiels de votre logement.</p>
@@ -120,7 +120,7 @@
                 </div>
 
                 {{-- Right: Property details --}}
-                <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 sm:p-8 space-y-5" data-aos="fade-up" data-aos-delay="100">
+                <div class="panel p-6 sm:p-8 space-y-5">
                     <div>
                         <h2 class="text-lg font-semibold text-surface-900">Informations logement</h2>
                         <p class="text-sm text-surface-500 mt-0.5">Capacité, tarifs et disponibilité.</p>
@@ -190,7 +190,7 @@
             </div>
 
             {{-- Image Manager --}}
-            <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-6 sm:p-8 space-y-5" data-aos="fade-up" data-aos-delay="150">
+            <div class="panel p-6 sm:p-8 space-y-5">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 text-navy-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
@@ -297,7 +297,7 @@
             </div>
 
             {{-- Actions --}}
-            <div class="bg-white/60 backdrop-blur-sm border border-surface-200/60 rounded-2xl p-5 flex items-center justify-end gap-3" data-aos="fade-up">
+            <div class="panel p-5 flex items-center justify-end gap-3">
                 <a href="{{ route('properties.show', $property) }}" class="btn-secondary">Annuler</a>
                 <button type="submit" class="btn-primary inline-flex items-center gap-2" :class="saving ? 'opacity-70 pointer-events-none' : ''">
                     <svg x-show="!saving" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>

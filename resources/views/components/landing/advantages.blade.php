@@ -1,6 +1,6 @@
 <section id="advantages" class="relative py-24 sm:py-32 overflow-hidden bg-surface-50">
     <div class="max-w-7xl mx-auto px-6">
-        <div data-aos="fade-up" class="text-center max-w-2xl mx-auto mb-16">
+        <div class="text-center max-w-2xl mx-auto mb-16">
             <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Avantages</span>
             <h2 class="mt-4 text-3xl sm:text-4xl font-bold text-surface-900 tracking-tight">Pourquoi choisir DarGuest ?</h2>
             <p class="mt-3 text-surface-500">Des bénéfices concrets pour les propriétaires et les voyageurs.</p>
@@ -19,7 +19,7 @@
             @endphp
 
             @foreach ($advantages as $i => $adv)
-                <div data-aos="fade-up" data-aos-delay="{{ $i * 50 }}"
+                <div
                      class="group flex items-start gap-4 p-5 rounded-2xl bg-white border border-surface-200 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
                     <div class="w-11 h-11 rounded-xl bg-navy-50 flex items-center justify-center flex-shrink-0 group-hover:bg-navy-100 transition-colors">
                         <svg class="w-5 h-5 text-navy-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

@@ -1,6 +1,6 @@
 <section id="faq" class="relative py-24 sm:py-32 overflow-hidden bg-surface-50">
     <div class="max-w-3xl mx-auto px-6">
-        <div data-aos="fade-up" class="text-center max-w-2xl mx-auto mb-16">
+        <div class="text-center max-w-2xl mx-auto mb-16">
             <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">FAQ</span>
             <h2 class="mt-4 text-3xl sm:text-4xl font-bold text-surface-900 tracking-tight">Questions fréquentes</h2>
             <p class="mt-3 text-surface-500">Tout ce que vous devez savoir sur DarGuest.</p>
@@ -19,7 +19,7 @@
             @endphp
 
             @foreach ($faqs as $i => $faq)
-                <div data-aos="fade-up" data-aos-delay="{{ $i * 50 }}"
+                <div
                      x-data="{ open: false }"
                      class="bg-white border border-surface-200 rounded-2xl overflow-hidden transition-all duration-300"
                      :class="open ? 'shadow-md' : 'hover:shadow-sm'">

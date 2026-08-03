@@ -1,6 +1,6 @@
 <section class="relative py-24 sm:py-32 overflow-hidden bg-white">
     <div class="max-w-7xl mx-auto px-6">
-        <div data-aos="fade-up" class="text-center max-w-2xl mx-auto mb-16">
+        <div class="text-center max-w-2xl mx-auto mb-16">
             <span class="text-xs font-semibold text-navy-700 uppercase tracking-widest">Témoignages</span>
             <h2 class="mt-4 text-3xl sm:text-4xl font-bold text-surface-900 tracking-tight">Ils nous font confiance</h2>
             <p class="mt-3 text-surface-500">Découvrez ce que nos utilisateurs disent de DarGuest.</p>
@@ -16,7 +16,7 @@
             @endphp
 
             @foreach ($testimonials as $i => $t)
-                <div data-aos="fade-up" data-aos-delay="{{ $i * 100 }}"
+                <div
                      class="bg-surface-50 border border-surface-200 rounded-2xl p-6 sm:p-8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                     <div class="flex items-center gap-1 mb-4">
                         @for ($s = 0; $s < 5; $s++)

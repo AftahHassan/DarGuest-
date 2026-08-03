@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationStatusRequest;
+use App\Models\Property;
 use App\Models\Reservation;
 use App\Services\ReservationService;
 use Illuminate\Http\RedirectResponse;
@@ -35,6 +36,14 @@ class ReservationController extends Controller
             });
         }
 
+        if ($guest = request('guest')) {
+            $reservations->whereHas('guest', fn ($q) => $q->whereRaw("concat(first_name, ' ', last_name) like ?", ["%{$guest}%"]));
+        }
+
+        if ($propertyId = request('property')) {
+            $reservations->where('property_id', $propertyId);
+        }
+
         if ($dateFrom = request('date_from')) {
             $reservations->whereDate('check_in_date', '>=', $dateFrom);
         }
@@ -43,9 +52,23 @@ class ReservationController extends Controller
             $reservations->whereDate('check_out_date', '<=', $dateTo);
         }
 
-        $reservations = $reservations->latest()->paginate(10);
+        $reservations = match (request('sort')) {
+            'check_in_asc'  => $reservations->orderBy('check_in_date'),
+            'check_in_desc' => $reservations->orderByDesc('check_in_date'),
+            'check_out_asc'  => $reservations->orderBy('check_out_date'),
+            'check_out_desc' => $reservations->orderByDesc('check_out_date'),
+            'price_asc'  => $reservations->orderBy('total_price'),
+            'price_desc' => $reservations->orderByDesc('total_price'),
+            default      => $reservations->latest(),
+        };
 
-        return view('reservations.index', compact('reservations'));
+        $reservations = $reservations->paginate(9);
+
+        $properties = $user->isOwner()
+            ? Property::where('owner_id', $user->id)->orderBy('title')->get()
+            : collect();
+
+        return view('reservations.index', compact('reservations', 'properties'));
     }
 
     public function store(StoreReservationRequest $request): RedirectResponse

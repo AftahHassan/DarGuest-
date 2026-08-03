@@ -11,15 +11,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    {{-- AOS --}}
-    
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
     {{-- Vite --}}
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 
+    
     <style>
         body { font-family: 'Poppins', 'Inter', sans-serif; }
         .text-balance { text-wrap: balance; }
@@ -56,19 +53,6 @@
 
     {{-- Footer --}}
     <x-landing.footer />
-
-    {{-- AOS --}}
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            AOS.init({
-                duration: 600,
-                easing: 'ease-out-cubic',
-                once: true,
-                offset: 50,
-            });
-        });
-    </script>
 
     {{-- Alpine --}}
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>

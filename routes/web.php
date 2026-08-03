@@ -51,6 +51,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::match(['get', 'post'], 'notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
     Route::match(['get', 'post'], 'notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+    Route::delete('notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
         
 
 });

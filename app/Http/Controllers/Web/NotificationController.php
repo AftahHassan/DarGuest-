@@ -11,9 +11,25 @@ class NotificationController extends Controller
 {
     public function index(): View
     {
-        $notifications = auth()->user()->notifications()->latest()->paginate(20);
+        $query = auth()->user()->notifications();
 
-        return view('notifications.index', compact('notifications'));
+        if (request()->filled('type')) {
+            $query->where('type', request('type'));
+        }
+
+        if (request()->boolean('unread')) {
+            $query->unread();
+        }
+
+        $notifications = $query->latest()->paginate(20)->withQueryString();
+
+        $stats = [
+            'total' => auth()->user()->notifications()->count(),
+            'unread' => auth()->user()->notifications()->unread()->count(),
+            'urgent' => auth()->user()->notifications()->where('type', 'emergency')->unread()->count(),
+        ];
+
+        return view('notifications.index', compact('notifications', 'stats'));
     }
 
     public function markAsRead(Notification $notification): RedirectResponse
@@ -32,5 +48,14 @@ class NotificationController extends Controller
         auth()->user()->notifications()->where('is_read', false)->update(['is_read' => true]);
 
         return back()->with('status', 'Toutes les notifications sont marquées comme lues.');
+    }
+
+    public function destroy(Notification $notification): RedirectResponse
+    {
+        $this->authorize('update', $notification);
+
+        $notification->delete();
+
+        return back()->with('status', 'Notification supprimée.');
     }
 }
