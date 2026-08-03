@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePropertyRequest;
 use App\Http\Requests\UpdatePropertyRequest;
 use App\Models\Property;
-use App\Services\NotificationService;
 use App\Services\PropertyService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -14,10 +13,7 @@ use Illuminate\View\View;
 
 class PropertyController extends Controller
 {
-    public function __construct(
-        protected PropertyService $properties,
-        protected NotificationService $notifications,
-    ) {}
+    public function __construct(protected PropertyService $properties) {}
 
     public function index(): View
     {
@@ -88,10 +84,6 @@ class PropertyController extends Controller
     public function store(StorePropertyRequest $request): RedirectResponse
     {
         $property = $this->properties->create($request->user(), $request->validated());
-
-        if ($property->status === 'available') {
-            $this->notifications->newPropertyAvailable($property);
-        }
 
         return redirect()->route('properties.show', $property)
             ->with('status', 'Logement créé avec succès.');

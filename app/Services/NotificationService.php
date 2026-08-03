@@ -4,9 +4,7 @@ namespace App\Services;
 
 use App\Models\Message;
 use App\Models\Notification;
-use App\Models\Property;
 use App\Models\Reservation;
-use App\Models\User;
 
 class NotificationService
 {
@@ -35,20 +33,6 @@ class NotificationService
             'content' => "La réservation pour {$reservation->property->title} ({$reservation->check_in_date->format('d/m/Y')} - {$reservation->check_out_date->format('d/m/Y')}) a été annulée.",
             'type' => 'reservation_cancelled',
         ]);
-    }
-
-    public function newPropertyAvailable(Property $property): void
-    {
-        $guests = User::guests()->get();
-
-        foreach ($guests as $guest) {
-            Notification::create([
-                'user_id' => $guest->id,
-                'title' => 'Nouveau logement disponible',
-                'content' => "Un nouveau logement « {$property->title} » à {$property->city} est maintenant disponible à {$property->price_per_night} MAD/nuit.",
-                'type' => 'new_property',
-            ]);
-        }
     }
 
     public function newMessage(Message $message): void
