@@ -243,6 +243,7 @@
             "license": [
                 "MIT"
             ],
+            
             "authors": [
                 {
                     "name": "Guilherme Blanco",
