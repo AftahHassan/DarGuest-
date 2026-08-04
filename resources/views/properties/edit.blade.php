@@ -222,10 +222,10 @@
                                     <h3 class="text-lg font-semibold text-surface-900 mb-1">Supprimer cette photo ?</h3>
                                     <p class="text-sm text-surface-500 mb-6">Cette action est irréversible.</p>
                                     <div class="flex items-center justify-center gap-3">
-                                        <button type="button" x-on:click="$dispatch('close-modal', 'delete-image-{{ $image->id }}')" class="btn-secondary text-sm px-5 py-2">Annuler</button>
+                                        <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'delete-image-{{ $image->id }}')">Annuler</x-button>
                                         <form method="POST" action="{{ route('properties.images.destroy', $image) }}">
                                             @csrf @method('DELETE')
-                                            <button type="submit" class="btn-danger text-sm px-5 py-2">Supprimer</button>
+                                            <x-button type="submit" variant="danger" size="sm">Supprimer</x-button>
                                         </form>
                                     </div>
                                 </div>
@@ -276,14 +276,14 @@
                                 </template>
                             </div>
                             <div class="flex items-center justify-center gap-3">
-                                <button type="submit" class="btn-primary text-sm px-5 py-2" x-show="!uploading">
+                                <x-button type="submit" x-show="!uploading">
                                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     Télécharger <span x-text="files.length"></span> photo(s)
-                                </button>
-                                <button type="button" class="btn-secondary text-sm px-5 py-2"
-                                        x-on:click="files = []; previews = []; $el.closest('form').querySelector('input[type=file]').value = ''">
+                                </x-button>
+                                <x-button variant="secondary"
+                                          x-on:click="files = []; previews = []; $el.closest('form').querySelector('input[type=file]').value = ''">
                                     Annuler
-                                </button>
+                                </x-button>
                             </div>
                             <div x-show="uploading" class="mt-4">
                                 <div class="w-full bg-surface-100 rounded-full h-2 overflow-hidden">
@@ -298,13 +298,13 @@
 
             {{-- Actions --}}
             <div class="panel p-5 flex items-center justify-end gap-3">
-                <a href="{{ route('properties.show', $property) }}" class="btn-secondary">Annuler</a>
-                <button type="submit" class="btn-primary inline-flex items-center gap-2" :class="saving ? 'opacity-70 pointer-events-none' : ''">
+                <x-button href="{{ route('properties.show', $property) }}" variant="secondary">Annuler</x-button>
+                <x-button type="submit" :class="saving ? 'opacity-70 pointer-events-none' : ''">
                     <svg x-show="!saving" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
                     <svg x-show="saving" x-cloak class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
                     <span x-show="!saving">Enregistrer</span>
                     <span x-show="saving" x-cloak>Enregistrement...</span>
-                </button>
+                </x-button>
             </div>
         </form>
 

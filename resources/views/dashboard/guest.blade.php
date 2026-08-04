@@ -61,12 +61,12 @@
                         </svg>
                     </div>
                     <p class="text-surface-500 mb-4">Aucune réservation pour le moment.</p>
-                    <a href="{{ route('properties.index') }}" class="btn-primary px-5 py-2.5">
+                    <x-button href="{{ route('properties.index') }}">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
                         </svg>
                         Voir les logements
-                    </a>
+                    </x-button>
                 </div>
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -102,9 +102,9 @@
                                 </div>
                                 <p class="text-lg font-bold text-surface-900 mt-3">{{ number_format($reservation->total_price, 0, ',', ' ') }} MAD</p>
                                 <div class="flex gap-2 mt-4 pt-4 border-t border-surface-200/60">
-                                    <a href="{{ route('reservations.show', $reservation) }}" class="btn-secondary text-sm px-4 py-2 flex-1">Voir</a>
+                                    <x-button href="{{ route('reservations.show', $reservation) }}" variant="secondary" size="sm" class="flex-1">Voir</x-button>
                                     @if(Route::has('conversations.index'))
-                                    <a href="{{ route('conversations.index') }}" class="btn-secondary text-sm px-4 py-2 flex-1">Contacter</a>
+                                    <x-button href="{{ route('conversations.index') }}" variant="secondary" size="sm" class="flex-1">Contacter</x-button>
                                     @endif
                                 </div>
                             </div>
@@ -149,12 +149,12 @@
                                 <p class="text-sm text-surface-500 mt-1">{{ $property->city }}</p>
                                 <p class="text-lg font-bold text-surface-900 mt-3">{{ number_format($property->price_per_night, 0, ',', ' ') }} <span class="text-xs font-normal text-surface-500">MAD/nuit</span></p>
                                 <div class="flex gap-2 mt-4 pt-4 border-t border-surface-200/60">
-                                    <a href="{{ route('properties.show', $property) }}" class="btn-primary text-sm px-4 py-2 flex-1">
+                                    <x-button href="{{ route('properties.show', $property) }}" size="sm" class="flex-1">
                                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
                                         </svg>
                                         Voir
-                                    </a>
+                                    </x-button>
                                 </div>
                             </div>
                         </div>

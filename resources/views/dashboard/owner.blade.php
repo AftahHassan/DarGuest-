@@ -206,13 +206,13 @@
                                 </span>
                             </div>
                             <div class="flex gap-2 mt-4 pt-4 border-t border-surface-200/60">
-                                <a href="{{ route('reservations.show', $reservation) }}" class="btn-secondary text-sm px-4 py-2 flex-1">Voir détails</a>
+                                <x-button href="{{ route('reservations.show', $reservation) }}" variant="secondary" size="sm" class="flex-1">Voir détails</x-button>
                                 @if(Route::has('conversations.index'))
-                                <a href="{{ route('conversations.index') }}" class="btn-ghost text-sm px-3 py-2">
+                                <x-button href="{{ route('conversations.index') }}" variant="ghost" size="sm">
                                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
                                     </svg>
-                                </a>
+                                </x-button>
                                 @endif
                             </div>
                         </div>
@@ -247,12 +247,12 @@
                         </svg>
                     </div>
                     <p class="text-surface-500 mb-4">Aucun logement pour l'instant.</p>
-                    <a href="{{ route('properties.create') }}" class="btn-primary px-5 py-2.5">
+                    <x-button href="{{ route('properties.create') }}">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                         </svg>
                         Ajouter un logement
-                    </a>
+                    </x-button>
                 </div>
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -310,10 +310,10 @@
                                 <div class="flex items-center justify-between mt-4 pt-4 border-t border-surface-200/60">
                                     <p class="text-lg font-bold text-surface-900">{{ number_format($property->price_per_night, 0, ',', ' ') }} <span class="text-xs font-normal text-surface-500">MAD/nuit</span></p>
                                     <div class="flex gap-1">
-                                        <a href="{{ route('properties.edit', $property) }}" class="btn-ghost text-xs px-3 py-1.5 rounded-lg">
+                                        <x-button href="{{ route('properties.edit', $property) }}" variant="ghost" size="sm">
                                             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
                                             Modifier
-                                        </a>
+                                        </x-button>
                                     </div>
                                 </div>
                             </div>

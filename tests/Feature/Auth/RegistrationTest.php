@@ -1,31 +1,89 @@
 <?php
 
-namespace Tests\Feature\Auth;
+use App\Models\User;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+it('registers an owner with valid data', function () {
+    $response = $this->post('/register', [
+        'first_name' => 'Hassan',
+        'last_name' => 'Aftah',
+        'email' => 'hassan@darguest.test',
+        'phone' => '0600000000',
+        'role' => 'owner',
+        'password' => 'Password123',
+        'password_confirmation' => 'Password123',
+    ]);
 
-class RegistrationTest extends TestCase
-{
-    use RefreshDatabase;
+    $this->assertAuthenticated();
+    $response->assertRedirect('/dashboard');
+    $this->assertDatabaseHas('users', [
+        'email' => 'hassan@darguest.test',
+        'role' => 'owner',
+    ]);
+});
 
-    public function test_registration_screen_can_be_rendered(): void
-    {
-        $response = $this->get('/register');
+it('registers a guest with valid data', function () {
+    $this->post('/register', [
+        'first_name' => 'Sara',
+        'last_name' => 'Idrissi',
+        'email' => 'sara@darguest.test',
+        'role' => 'guest',
+        'password' => 'Password123',
+        'password_confirmation' => 'Password123',
+    ]);
 
-        $response->assertStatus(200);
-    }
+    $this->assertDatabaseHas('users', ['email' => 'sara@darguest.test', 'role' => 'guest']);
+});
 
-    public function test_new_users_can_register(): void
-    {
-        $response = $this->post('/register', [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ]);
+it('rejects registration with an invalid role', function () {
+    $response = $this->post('/register', [
+        'first_name' => 'Test',
+        'last_name' => 'User',
+        'email' => 'test@darguest.test',
+        'role' => 'admin',
+        'password' => 'Password123',
+        'password_confirmation' => 'Password123',
+    ]);
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
-    }
-}
+    $response->assertSessionHasErrors('role');
+});
+
+it('rejects a duplicate email', function () {
+    User::factory()->create(['email' => 'exists@darguest.test']);
+
+    $response = $this->post('/register', [
+        'first_name' => 'Test',
+        'last_name' => 'User',
+        'email' => 'exists@darguest.test',
+        'role' => 'guest',
+        'password' => 'Password123',
+        'password_confirmation' => 'Password123',
+    ]);
+
+    $response->assertSessionHasErrors('email');
+});
+
+it('rejects a weak password', function () {
+    $response = $this->post('/register', [
+        'first_name' => 'Test',
+        'last_name' => 'User',
+        'email' => 'weak@darguest.test',
+        'role' => 'guest',
+        'password' => 'weak',
+        'password_confirmation' => 'weak',
+    ]);
+
+    $response->assertSessionHasErrors('password');
+});
+
+it('cannot change role after registration', function () {
+    $user = User::factory()->guest()->create();
+
+    $this->actingAs($user)->patch('/profile', [
+        'first_name' => $user->first_name,
+        'last_name' => $user->last_name,
+        'email' => $user->email,
+        'role' => 'owner',
+    ]);
+
+    expect($user->fresh()->role)->toBe('guest');
+});

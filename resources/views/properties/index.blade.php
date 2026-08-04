@@ -11,10 +11,10 @@
                 <p class="text-surface-500 mt-1">Gérez tous vos logements depuis une seule interface.</p>
             </div>
             @can('create', App\Models\Property::class)
-                <a href="{{ route('properties.create') }}" class="btn-primary shrink-0">
+                <x-button href="{{ route('properties.create') }}" class="shrink-0">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
                     Nouveau logement
-                </a>
+                </x-button>
             @endcan
         </div>
 
@@ -74,12 +74,12 @@
                 </div>
             </div>
             <div class="flex gap-3">
-                <button type="submit" class="btn-primary text-sm px-5 py-2">
+                <x-button type="submit">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
                     Filtrer
-                </button>
+                </x-button>
                 @if(request()->anyFilled(['search', 'status', 'city', 'price_max', 'sort']))
-                    <a href="{{ route('properties.index') }}" class="btn-secondary text-sm px-5 py-2">Réinitialiser</a>
+                    <x-button href="{{ route('properties.index') }}" variant="secondary">Réinitialiser</x-button>
                 @endif
             </div>
         </form>
@@ -129,15 +129,15 @@
 
                             {{-- Overlay actions --}}
                             <div class="absolute inset-x-0 bottom-0 p-4 flex gap-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10">
-                                <a href="{{ route('properties.show', $property) }}" class="flex-1 bg-white/90 backdrop-blur-sm hover:bg-white text-surface-900 text-xs font-medium rounded-xl py-2.5 text-center transition-all duration-200">
-                                    <svg class="w-4 h-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <x-button href="{{ route('properties.show', $property) }}" size="sm" class="flex-1">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                     Voir
-                                </a>
+                                </x-button>
                                 @can('update', $property)
-                                    <a href="{{ route('properties.edit', $property) }}" class="flex-1 bg-white/90 backdrop-blur-sm hover:bg-white text-surface-900 text-xs font-medium rounded-xl py-2.5 text-center transition-all duration-200">
-                                        <svg class="w-4 h-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
-                                        Modifier
-                                    </a>
+                                <x-button href="{{ route('properties.edit', $property) }}" size="sm" class="flex-1">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
+                                    Modifier
+                                </x-button>
                                 @endcan
                             </div>
                         </div>
@@ -203,13 +203,13 @@
                     <p class="text-sm text-surface-500 mb-2">Cette action est irréversible.</p>
                     <p class="text-xs text-surface-400 mb-6">Toutes les données associées seront définitivement supprimées.</p>
                     <div class="flex items-center justify-center gap-3">
-                        <button type="button" x-on:click="$dispatch('close-modal', 'delete-property')" class="btn-secondary text-sm px-5 py-2">Annuler</button>
+                        <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'delete-property')">Annuler</x-button>
                         <form x-ref="deleteForm" method="POST" x-bind:action="'{{ url('properties') }}/' + deleteId">
                             @csrf @method('DELETE')
-                            <button type="submit" class="btn-danger text-sm px-5 py-2">
+                            <x-button type="submit" variant="danger" size="sm">
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                 Supprimer
-                            </button>
+                            </x-button>
                         </form>
                     </div>
                 </div>
@@ -226,10 +226,10 @@
                 <h3 class="text-lg font-semibold text-surface-900 mb-1">Vous n'avez encore aucun logement</h3>
                 <p class="text-sm text-surface-500 max-w-sm mx-auto mb-6">Commencez par créer votre premier logement dès maintenant.</p>
                 @can('create', App\Models\Property::class)
-                    <a href="{{ route('properties.create') }}" class="btn-primary">
+                    <x-button href="{{ route('properties.create') }}">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
                         Créer un logement
-                    </a>
+                    </x-button>
                 @endcan
             </div>
         @endif

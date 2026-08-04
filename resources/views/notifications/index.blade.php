@@ -21,10 +21,10 @@
             @if($stats['unread'] > 0)
                 <form method="POST" action="{{ route('notifications.read-all') }}">
                     @csrf
-                    <button type="submit" class="btn-secondary text-sm px-5 py-2.5 rounded-xl">
+                    <x-button type="submit" variant="secondary" size="sm">
                         <svg class="w-4 h-4 text-navy-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"/></svg>
                         Tout marquer comme lu
-                    </button>
+                    </x-button>
                 </form>
             @endif
         </div>
@@ -87,12 +87,12 @@
                     </label>
                 </div>
                 <div class="lg:col-span-2 flex items-end gap-3">
-                    <button type="submit" class="btn-primary text-sm px-5 py-2.5">
+                    <x-button type="submit" size="sm">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
                         Filtrer
-                    </button>
+                    </x-button>
                     @if(request()->anyFilled(['type', 'unread']))
-                        <a href="{{ route('notifications.index') }}" class="btn-secondary text-sm px-5 py-2.5">Réinitialiser</a>
+                        <x-button href="{{ route('notifications.index') }}" variant="secondary" size="sm">Réinitialiser</x-button>
                     @endif
                 </div>
             </div>
@@ -138,16 +138,15 @@
                             @unless($notification->is_read)
                                 <form method="POST" action="{{ route('notifications.read', $notification) }}">
                                     @csrf
-                                    <button type="submit" class="btn-secondary w-9 h-9 p-0 rounded-xl" title="Marquer comme lu">
+                                    <x-button type="submit" variant="ghost" size="icon" title="Marquer comme lu">
                                         <svg class="w-4 h-4 text-navy-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"/></svg>
-                                    </button>
+                                    </x-button>
                                 </form>
                             @endunless
-                            <button type="button"
-                                    x-on:click="deleteId = {{ $notification->id }}; $dispatch('open-modal', 'delete-notification')"
-                                    class="btn-secondary w-9 h-9 p-0 rounded-xl text-red-500 hover:text-red-700 hover:bg-red-50" title="Supprimer">
+                            <x-button variant="ghost" size="icon" class="!text-red-500"
+                                      x-on:click="deleteId = {{ $notification->id }}; $dispatch('open-modal', 'delete-notification')" title="Supprimer">
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
-                            </button>
+                            </x-button>
                         </div>
                     </div>
                 @endforeach
@@ -167,13 +166,13 @@
                     <p class="text-sm text-surface-500 mb-2">Cette action est irréversible.</p>
                     <p class="text-xs text-surface-400 mb-6">La notification sera définitivement supprimée.</p>
                     <div class="flex items-center justify-center gap-3">
-                        <button type="button" x-on:click="$dispatch('close-modal', 'delete-notification')" class="btn-secondary text-sm px-5 py-2">Retour</button>
+                        <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'delete-notification')">Retour</x-button>
                         <form method="POST" x-bind:action="'{{ url('notifications') }}/' + deleteId">
                             @csrf @method('DELETE')
-                            <button type="submit" class="btn-danger text-sm px-5 py-2">
+                            <x-button type="submit" variant="danger" size="sm">
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
                                 Supprimer
-                            </button>
+                            </x-button>
                         </form>
                     </div>
                 </div>
@@ -194,7 +193,7 @@
                 @if(request()->anyFilled(['type', 'unread']))
                     <h3 class="text-lg font-semibold text-surface-900 mb-1">Aucune notification trouvée</h3>
                     <p class="text-sm text-surface-500 max-w-sm mx-auto mb-6">Ajustez vos filtres pour retrouver vos notifications.</p>
-                    <a href="{{ route('notifications.index') }}" class="btn-secondary text-sm px-5 py-2.5">Réinitialiser les filtres</a>
+                    <x-button href="{{ route('notifications.index') }}" variant="secondary" size="sm">Réinitialiser les filtres</x-button>
                 @else
                     <h3 class="text-lg font-semibold text-surface-900 mb-1">Aucune notification</h3>
                     <p class="text-sm text-surface-500 max-w-sm mx-auto">Vous n'avez aucune notification pour le moment. Les alertes de réservations, messages et urgences apparaîtront ici.</p>
