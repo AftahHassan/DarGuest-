@@ -8,13 +8,12 @@
                 <h1 class="text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight mt-2">📅 Réservations</h1>
                 <p class="text-surface-500 mt-1">Gérez facilement toutes les réservations de vos logements.</p>
             </div>
-            <a href="{{ route('properties.index') }}"
-               class="inline-flex items-center justify-center gap-2 shrink-0 px-6 py-3 bg-surface-900 hover:bg-surface-950 text-white text-sm font-semibold rounded-2xl shadow-lg shadow-surface-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+            <x-button href="{{ route('properties.index') }}" size="lg" class="shrink-0">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                 </svg>
                 Nouvelle réservation
-            </a>
+            </x-button>
         </div>
 
         {{-- Toasts --}}
@@ -90,12 +89,12 @@
             @endif
 
             <div class="flex gap-3">
-                <button type="submit" class="btn-primary text-sm px-5 py-2">
+                <x-button type="submit" size="sm">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
                     Filtrer
-                </button>
+                </x-button>
                 @if(request()->anyFilled(['search', 'status', 'property', 'guest', 'date_from', 'date_to', 'sort']))
-                    <a href="{{ route('reservations.index') }}" class="btn-secondary text-sm px-5 py-2">Réinitialiser</a>
+                    <x-button href="{{ route('reservations.index') }}" variant="secondary" size="sm">Réinitialiser</x-button>
                 @endif
             </div>
         </form>
@@ -208,25 +207,23 @@
 
                             {{-- Actions --}}
                             <div class="flex gap-2 mt-4 pt-4 border-t border-surface-200/60">
-                                <a href="{{ route('reservations.show', $reservation) }}" class="flex-1 btn-primary text-xs px-3 py-2.5 rounded-xl">
+                                <x-button href="{{ route('reservations.show', $reservation) }}" class="flex-1" size="sm">
                                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                     Voir
-                                </a>
+                                </x-button>
                                 @if($isOwner)
-                                    <button type="button"
-                                            x-on:click="statusId = {{ $reservation->id }}; statusValue = '{{ $reservation->status }}'; $dispatch('open-modal', 'status-reservation')"
-                                            class="btn-secondary text-xs px-3 py-2.5 rounded-xl">
+                                    <x-button variant="secondary" size="sm"
+                                              x-on:click="statusId = {{ $reservation->id }}; statusValue = '{{ $reservation->status }}'; $dispatch('open-modal', 'status-reservation')">
                                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
                                         Modifier
-                                    </button>
+                                    </x-button>
                                 @endif
                                 @if(in_array($reservation->status, ['pending', 'confirmed']))
-                                    <button type="button"
-                                            x-on:click="cancelId = {{ $reservation->id }}; $dispatch('open-modal', 'cancel-reservation')"
-                                            class="btn-ghost text-xs px-3 py-2.5 rounded-xl text-red-500 hover:text-red-700 hover:bg-red-50">
+                                    <x-button variant="ghost" size="sm" class="!text-red-500 hover:!bg-red-50"
+                                              x-on:click="cancelId = {{ $reservation->id }}; $dispatch('open-modal', 'cancel-reservation')">
                                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                         Annuler
-                                    </button>
+                                    </x-button>
                                 @endif
                             </div>
                         </div>
@@ -257,8 +254,8 @@
                             <option value="completed">Terminée</option>
                         </select>
                         <div class="flex items-center justify-center gap-3">
-                            <button type="button" x-on:click="$dispatch('close-modal', 'status-reservation')" class="btn-secondary text-sm px-5 py-2">Annuler</button>
-                            <button type="submit" class="btn-primary text-sm px-5 py-2">Enregistrer</button>
+                            <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'status-reservation')">Annuler</x-button>
+                            <x-button type="submit" size="sm">Enregistrer</x-button>
                         </div>
                     </form>
                 </div>
@@ -274,13 +271,13 @@
                     <p class="text-sm text-surface-500 mb-2">Cette action est irréversible.</p>
                     <p class="text-xs text-surface-400 mb-6">Le voyageur sera informé de l'annulation.</p>
                     <div class="flex items-center justify-center gap-3">
-                        <button type="button" x-on:click="$dispatch('close-modal', 'cancel-reservation')" class="btn-secondary text-sm px-5 py-2">Retour</button>
+                        <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'cancel-reservation')">Retour</x-button>
                         <form method="POST" x-bind:action="'{{ url('reservations') }}/' + cancelId + '/cancel'">
                             @csrf @method('PATCH')
-                            <button type="submit" class="btn-danger text-sm px-5 py-2">
+                            <x-button type="submit" variant="danger" size="sm">
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 Confirmer l'annulation
-                            </button>
+                            </x-button>
                         </form>
                     </div>
                 </div>
@@ -301,12 +298,12 @@
                 <p class="text-sm text-surface-500 max-w-sm mx-auto mb-6">Ajustez vos filtres ou créez une nouvelle réservation dès maintenant.</p>
                 <div class="flex items-center justify-center gap-3">
                     @if(request()->anyFilled(['search', 'status', 'property', 'guest', 'date_from', 'date_to', 'sort']))
-                        <a href="{{ route('reservations.index') }}" class="btn-secondary text-sm px-5 py-2.5">Réinitialiser les filtres</a>
+                        <x-button href="{{ route('reservations.index') }}" variant="secondary" size="sm">Réinitialiser les filtres</x-button>
                     @endif
-                    <a href="{{ route('properties.index') }}" class="btn-primary">
+                    <x-button href="{{ route('properties.index') }}">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
                         Nouvelle réservation
-                    </a>
+                    </x-button>
                 </div>
             </div>
         @endif

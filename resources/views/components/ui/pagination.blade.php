@@ -4,15 +4,15 @@
     <nav class="flex items-center justify-between px-1 mt-6">
         <div class="flex-1 flex justify-between sm:hidden">
             @if ($paginator->onFirstPage())
-                <span class="btn-ghost opacity-50 cursor-not-allowed text-sm">Précédent</span>
+                <span class="inline-flex items-center justify-center w-fit gap-2.5 font-semibold rounded-xl h-10 px-4 text-xs text-surface-600 opacity-50 cursor-not-allowed">Précédent</span>
             @else
-                <a href="{{ $paginator->previousPageUrl() }}" class="btn-ghost text-sm">Précédent</a>
+                <x-button href="{{ $paginator->previousPageUrl() }}" variant="ghost" size="sm">Précédent</x-button>
             @endif
 
             @if ($paginator->hasMorePages())
-                <a href="{{ $paginator->nextPageUrl() }}" class="btn-ghost text-sm">Suivant</a>
+                <x-button href="{{ $paginator->nextPageUrl() }}" variant="ghost" size="sm">Suivant</x-button>
             @else
-                <span class="btn-ghost opacity-50 cursor-not-allowed text-sm">Suivant</span>
+                <span class="inline-flex items-center justify-center w-fit gap-2.5 font-semibold rounded-xl h-10 px-4 text-xs text-surface-600 opacity-50 cursor-not-allowed">Suivant</span>
             @endif
         </div>
 

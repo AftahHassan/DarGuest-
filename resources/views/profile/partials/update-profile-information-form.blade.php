@@ -38,7 +38,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <button type="submit" class="btn-primary">{{ __('Enregistrer') }}</button>
+            <x-button type="submit">{{ __('Enregistrer') }}</x-button>
 
             @if (session('status') === 'profile-updated')
                 <p class="text-sm text-surface-600">{{ __('Enregistré.') }}</p>

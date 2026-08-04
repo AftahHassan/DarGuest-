@@ -158,10 +158,10 @@
                                             <h3 class="text-lg font-semibold text-surface-900 mb-1">Supprimer cette photo ?</h3>
                                             <p class="text-sm text-surface-500 mb-6">Cette action est irréversible.</p>
                                             <div class="flex items-center justify-center gap-3">
-                                                <button type="button" x-on:click="$dispatch('close-modal', 'delete-image-{{ $image->id }}')" class="btn-secondary text-sm px-5 py-2">Annuler</button>
+                                                <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'delete-image-{{ $image->id }}')">Annuler</x-button>
                                                 <form method="POST" action="{{ route('properties.images.destroy', $image) }}">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" class="btn-danger text-sm px-5 py-2">Supprimer</button>
+                                                    <x-button type="submit" variant="danger" size="sm">Supprimer</x-button>
                                                 </form>
                                             </div>
                                         </div>
@@ -212,14 +212,14 @@
                                         </template>
                                     </div>
                                     <div class="flex items-center justify-center gap-3">
-                                        <button type="submit" class="btn-primary text-sm px-5 py-2" x-show="!uploading">
+                                        <x-button type="submit" x-show="!uploading">
                                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                             Télécharger <span x-text="files.length"></span> photo(s)
-                                        </button>
-                                        <button type="button" class="btn-secondary text-sm px-5 py-2"
-                                                x-on:click="files = []; previews = []; $el.closest('form').querySelector('input[type=file]').value = ''">
+                                        </x-button>
+                                        <x-button variant="secondary"
+                                                  x-on:click="files = []; previews = []; $el.closest('form').querySelector('input[type=file]').value = ''">
                                             Annuler
-                                        </button>
+                                        </x-button>
                                     </div>
                                     <div x-show="uploading" class="mt-4">
                                         <div class="w-full bg-surface-100 rounded-full h-2 overflow-hidden">
@@ -337,10 +337,10 @@
                                           class="w-full bg-white border border-surface-200 text-surface-800 rounded-xl text-sm transition-all duration-200 px-4 py-2.5 focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20 focus:outline-none placeholder:text-surface-400 resize-y min-h-[60px]">{{ $property->info?->house_rules }}</textarea>
                             </div>
 
-                            <button type="submit" class="btn-primary">
+                            <x-button type="submit">
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
                                 Enregistrer les informations
-                            </button>
+                            </x-button>
                         </form>
                     </div>
                 @endcan
@@ -358,10 +358,10 @@
                             </div>
                         </div>
                         @can('update', $property)
-                            <button x-on:click="$dispatch('open-modal', 'add-recommendation')" class="btn-primary text-sm px-4 py-2">
+                            <x-button size="sm" x-on:click="$dispatch('open-modal', 'add-recommendation')">
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
                                 Ajouter
-                            </button>
+                            </x-button>
                         @endcan
                     </div>
 
@@ -458,8 +458,8 @@
                                             </div>
                                         </form>
                                         <x-slot:footer>
-                                            <button type="button" x-on:click="$dispatch('close-modal', 'edit-recommendation-{{ $reco->id }}')" class="btn-secondary text-sm px-5 py-2">Annuler</button>
-                                            <button type="submit" form="edit-reco-form-{{ $reco->id }}" class="btn-primary text-sm px-5 py-2">Enregistrer</button>
+                                            <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'edit-recommendation-{{ $reco->id }}')">Annuler</x-button>
+                                            <x-button type="submit" form="edit-reco-form-{{ $reco->id }}" size="sm">Enregistrer</x-button>
                                         </x-slot:footer>
                                     </x-ui.modal>
 
@@ -472,10 +472,10 @@
                                             <h3 class="text-lg font-semibold text-surface-900 mb-1">Supprimer cette recommandation ?</h3>
                                             <p class="text-sm text-surface-500 mb-6">Cette action est irréversible.</p>
                                             <div class="flex items-center justify-center gap-3">
-                                                <button type="button" x-on:click="$dispatch('close-modal', 'delete-recommendation-{{ $reco->id }}')" class="btn-secondary text-sm px-5 py-2">Annuler</button>
+                                                <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'delete-recommendation-{{ $reco->id }}')">Annuler</x-button>
                                                 <form method="POST" action="{{ route('properties.recommendations.destroy', $reco) }}">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" class="btn-danger text-sm px-5 py-2">Supprimer</button>
+                                                    <x-button type="submit" variant="danger" size="sm">Supprimer</x-button>
                                                 </form>
                                             </div>
                                         </div>
@@ -557,10 +557,10 @@
                                 <textarea name="special_request" rows="2" placeholder="Optionnel"
                                           class="w-full bg-white border border-surface-200 text-surface-800 rounded-xl text-sm px-4 py-2.5 focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20 focus:outline-none placeholder:text-surface-400 resize-y min-h-[60px]">{{ old('special_request') }}</textarea>
                             </div>
-                            <button type="submit" class="btn-primary w-full">
+                            <x-button type="submit" full>
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
                                 Réserver
-                            </button>
+                            </x-button>
                         </form>
                     </div>
                 @endif
@@ -608,8 +608,8 @@
                     </div>
                 </form>
                 <x-slot:footer>
-                    <button type="button" x-on:click="$dispatch('close-modal', 'add-recommendation')" class="btn-secondary text-sm px-5 py-2">Annuler</button>
-                    <button type="submit" form="add-reco-form" class="btn-primary text-sm px-5 py-2">Ajouter</button>
+                    <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'add-recommendation')">Annuler</x-button>
+                    <x-button type="submit" form="add-reco-form" size="sm">Ajouter</x-button>
                 </x-slot:footer>
             </x-ui.modal>
 
@@ -623,13 +623,13 @@
                     <p class="text-sm text-surface-500 mb-2">Cette action est irréversible.</p>
                     <p class="text-xs text-surface-400 mb-6">Toutes les données associées seront définitivement supprimées.</p>
                     <div class="flex items-center justify-center gap-3">
-                        <button type="button" x-on:click="$dispatch('close-modal', 'delete-property-{{ $property->id }}')" class="btn-secondary text-sm px-5 py-2">Annuler</button>
+                        <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'delete-property-{{ $property->id }}')">Annuler</x-button>
                         <form method="POST" action="{{ route('properties.destroy', $property) }}">
                             @csrf @method('DELETE')
-                            <button type="submit" class="btn-danger text-sm px-5 py-2">
+                            <x-button type="submit" variant="danger" size="sm">
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                 Supprimer
-                            </button>
+                            </x-button>
                         </form>
                     </div>
                 </div>

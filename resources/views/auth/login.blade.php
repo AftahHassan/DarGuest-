@@ -94,13 +94,12 @@
                     @endif
                 </div>
 
-                <button type="submit"
-                        class="btn-primary w-full py-2.5 rounded-2xl text-sm font-semibold shadow-xl shadow-navy-700/20 hover:shadow-navy-700/30 hover:-translate-y-0.5 transition-all duration-300">
+                <x-button type="submit" full size="lg">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                     </svg>
                     {{ __('Se connecter') }}
-                </button>
+                </x-button>
 
                 {{-- Social --}}
                 <div class="relative my-4">

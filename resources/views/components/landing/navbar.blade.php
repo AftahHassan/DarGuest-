@@ -28,11 +28,11 @@
         <div class="hidden lg:flex items-center gap-3">
             @if (Route::has('login'))
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="btn-primary text-sm px-5 py-2.5">Dashboard</a>
+                    <x-button href="{{ url('/dashboard') }}" size="lg">Dashboard</x-button>
                 @else
                     <a href="{{ route('login') }}" class="text-sm font-medium text-surface-600 hover:text-navy-700 transition-colors px-4 py-2">Connexion</a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="btn-primary text-sm px-5 py-2.5">Créer un compte</a>
+                        <x-button href="{{ route('register') }}" size="lg">Créer un compte</x-button>
                     @endif
                 @endauth
             @endif
@@ -67,11 +67,11 @@
         <div class="pt-3 border-t border-surface-200 flex flex-col gap-2">
             @if (Route::has('login'))
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="btn-primary text-sm text-center">Dashboard</a>
+                    <x-button href="{{ url('/dashboard') }}" full>Dashboard</x-button>
                 @else
-                    <a href="{{ route('login') }}" class="btn-secondary text-sm text-center">Connexion</a>
+                    <x-button href="{{ route('login') }}" variant="secondary" full>Connexion</x-button>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="btn-primary text-sm text-center">Créer un compte</a>
+                        <x-button href="{{ route('register') }}" full>Créer un compte</x-button>
                     @endif
                 @endauth
             @endif

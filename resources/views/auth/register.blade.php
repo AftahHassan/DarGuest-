@@ -154,13 +154,12 @@
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1.5" />
                 </div>
 
-                <button type="submit"
-                        class="btn-primary w-full py-2.5 rounded-2xl text-sm font-semibold shadow-xl shadow-navy-700/20 hover:shadow-navy-700/30 hover:-translate-y-0.5 transition-all duration-300">
+                <x-button type="submit" full size="lg">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     {{ __("S'inscrire") }}
-                </button>
+                </x-button>
             </form>
 
             <p class="mt-5 text-center text-sm text-surface-500">

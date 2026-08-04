@@ -22,7 +22,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <button type="submit" class="btn-primary">{{ __('Enregistrer') }}</button>
+            <x-button type="submit">{{ __('Enregistrer') }}</x-button>
 
             @if (session('status') === 'password-updated')
                 <p

@@ -221,29 +221,25 @@
 
         {{-- Actions --}}
         <div class="flex flex-wrap items-center gap-3">
-            <a href="{{ $conversation ? route('conversations.show', $conversation) : route('conversations.index') }}"
-               class="btn-primary px-6 py-3 rounded-xl text-sm">
+            <x-button href="{{ $conversation ? route('conversations.show', $conversation) : route('conversations.index') }}">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
                 Contacter le voyageur
-            </a>
-            <button type="button" x-on:click="window.print()"
-                    class="btn-secondary px-6 py-3 rounded-xl text-sm">
+            </x-button>
+            <x-button variant="secondary" x-on:click="window.print()">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
                 Télécharger PDF
-            </button>
+            </x-button>
             @if($isOwner)
-                <button type="button" x-on:click="$dispatch('open-modal', 'status-reservation')"
-                        class="btn-secondary px-6 py-3 rounded-xl text-sm">
+                <x-button variant="secondary" x-on:click="$dispatch('open-modal', 'status-reservation')">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/></svg>
                     Modifier
-                </button>
+                </x-button>
             @endif
             @if(in_array($reservation->status, ['pending', 'confirmed']))
-                <button type="button" x-on:click="$dispatch('open-modal', 'cancel-reservation')"
-                        class="btn-danger px-6 py-3 rounded-xl text-sm">
+                <x-button variant="danger" x-on:click="$dispatch('open-modal', 'cancel-reservation')">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     Annuler
-                </button>
+                </x-button>
             @endif
         </div>
 
@@ -303,8 +299,8 @@
                         <option value="completed">Terminée</option>
                     </select>
                     <div class="flex items-center justify-center gap-3">
-                        <button type="button" x-on:click="$dispatch('close-modal', 'status-reservation')" class="btn-secondary text-sm px-5 py-2">Annuler</button>
-                        <button type="submit" class="btn-primary text-sm px-5 py-2">Enregistrer</button>
+                        <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'status-reservation')">Annuler</x-button>
+                        <x-button type="submit" size="sm">Enregistrer</x-button>
                     </div>
                 </form>
             </div>
@@ -320,13 +316,13 @@
                 <p class="text-sm text-surface-500 mb-2">Cette action est irréversible.</p>
                 <p class="text-xs text-surface-400 mb-6">Le voyageur sera informé de l'annulation.</p>
                 <div class="flex items-center justify-center gap-3">
-                    <button type="button" x-on:click="$dispatch('close-modal', 'cancel-reservation')" class="btn-secondary text-sm px-5 py-2">Retour</button>
+                    <x-button variant="secondary" size="sm" x-on:click="$dispatch('close-modal', 'cancel-reservation')">Retour</x-button>
                     <form method="POST" action="{{ route('reservations.cancel', $reservation) }}">
                         @csrf @method('PATCH')
-                        <button type="submit" class="btn-danger text-sm px-5 py-2">
+                        <x-button type="submit" variant="danger" size="sm">
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             Confirmer l'annulation
-                        </button>
+                        </x-button>
                     </form>
                 </div>
             </div>
